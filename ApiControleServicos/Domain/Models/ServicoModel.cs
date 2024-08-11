@@ -12,23 +12,22 @@
         public int? EmpresaId { get; set; } = 0;
 
         public ServicoModel(string? nome, string? descricao, double? orcamento, double? valorFaturado,
-            double? lucroLiquido, DateTime? inicio, DateTime? termino, int? usuarioId, int? empresaId)
+            double? lucroLiquido, DateTime? finalizado, int? usuarioId, int? empresaId)
         {
             Nome = nome;
             Descricao = descricao;
             Orcamento = orcamento;
             ValorFaturado = valorFaturado;
             LucroLiquido = lucroLiquido;
-            Inicio = inicio;
-            Termino = termino;
+            DataFinalizado = finalizado;
             UsuarioId = usuarioId;
             EmpresaId = empresaId;
         }
 
         public static ServicoModel Create(string? nome, string? descricao, double? orcamento, double? valorFaturado,
-            double? lucroLiquido, DateTime? inicio, DateTime? termino, int? usuarioId, int? empresaId) =>
+            double? lucroLiquido, DateTime? finalizado, int? usuarioId, int? empresaId) =>
             new(nome:nome, descricao:descricao, orcamento: orcamento, valorFaturado:valorFaturado, lucroLiquido:lucroLiquido,
-                inicio:inicio, termino: termino,usuarioId:usuarioId, empresaId:empresaId);
+                finalizado: finalizado, usuarioId:usuarioId, empresaId:empresaId);
 
         public void Deletar()
         {
