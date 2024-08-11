@@ -7,12 +7,9 @@
         public double? Orcamento { get; set; } = null;
         public double? ValorFaturado { get; set; } = null;
         public double? LucroLiquido { get; set; } = null;
-        public DateTime? Inicio { get; set; } 
-        public DateTime? Termino { get; set; }
-        public int? UsuarioId { get; set; }
-        public int? EmpresaId { get; set; }
-
-        public ServicoModel() { }
+        public DateTime? DataFinalizado { get; set; } = null;
+        public int? UsuarioId { get; set; } = 0;
+        public int? EmpresaId { get; set; } = 0;
 
         public ServicoModel(string? nome, string? descricao, double? orcamento, double? valorFaturado,
             double? lucroLiquido, DateTime? inicio, DateTime? termino, int? usuarioId, int? empresaId)

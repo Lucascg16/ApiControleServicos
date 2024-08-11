@@ -1,8 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace ApiControleServicos.Domain.Models
+﻿namespace ApiControleServicos.Domain.Models
 {
-    [Table("Empresa")]
     public class EmpresaModel : ModelBase
     {
         public string? Nome { get; set; }
