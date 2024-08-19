@@ -13,7 +13,7 @@ namespace ApiControleServicos.Infra
 			base.OnModelCreating(modelBuilder);
 		}
 
-		public DbSet<UsuarioModel> Pessoas { get; set; } = null!;
+		public DbSet<UsuarioModel> Usuario { get; set; } = null!;
         public DbSet<EmpresaModel> Empresa { get; set; } = null!;
         public DbSet<ServicoModel> Servicos { get; set; } = null!;
     }

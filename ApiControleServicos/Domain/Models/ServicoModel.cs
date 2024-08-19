@@ -2,6 +2,8 @@
 {
     public class ServicoModel : ModelBase
     {
+        public ServicoModel() { }
+
         public ServicoModel(string? nome, string? descricao, double? orcamento, double? valorFaturado, double? lucroLiquido,
             DateTime? dataFinalizado, int? usuarioId, int? empresaId)
         {
@@ -24,6 +26,7 @@
         public int? UsuarioId { get; set; } = 0;
         public int? EmpresaId { get; set; } = 0;
 
+        
 
         public void Deletar()
         {
