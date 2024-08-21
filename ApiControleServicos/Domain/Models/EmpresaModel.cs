@@ -20,8 +20,13 @@
             Cpf = cpf;
         }
 
-        public static EmpresaModel Create(string nome, string? cnpj, string? cpf) =>
-            new(nome: nome, cnpj:cnpj, cpf:cpf);
+        public void UpdateEmpresa(string nome, string? cnpj, string? cpf)
+        {
+            Nome = nome;
+            Cnpj = cnpj;
+            Cpf = cpf;
+            Atualizar();
+        }
 
         public void Delete()
         {

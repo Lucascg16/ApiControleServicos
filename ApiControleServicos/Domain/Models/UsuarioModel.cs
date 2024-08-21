@@ -12,15 +12,19 @@
             Email = string.Empty;
         }
 
-        private UsuarioModel(string nome, string email, int empresaId)
+        public UsuarioModel(string nome, string email, int empresaId)
         {
             Nome = nome;
             Email = email;
             EmpresaId = empresaId;
         }
 
-        public static UsuarioModel Create(string nome, string email, int empresaId) => 
-            new (nome: nome, email: email, empresaId:empresaId);
+        public void UpdateUsuario(string nome, string email)
+        {
+            Nome = nome;
+            Email = email;
+            Atualizar();
+        }
 
         public void Delete()
         {

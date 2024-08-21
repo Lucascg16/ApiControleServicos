@@ -1,4 +1,6 @@
 ﻿using ApiControleServicos.Domain;
+using ApiControleServicos.Infra.Interfaces;
+using ApiControleServicos.Infra.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApiControleServicos.Infra
@@ -12,9 +14,11 @@ namespace ApiControleServicos.Infra
             services.AddDbContext<ApiDbContext>(options => options.UseSqlServer(connectionString));
 
             //Services
+            services.AddScoped<IUsuarioServices, UsuarioServices>();
+			services.AddScoped<IEmpresaServices, EmpresaServices>();
 
-            //Respositores
-            services.AddScoped<IUsuarioRepository, UsuarioRespository>();
+			//Respositores
+			services.AddScoped<IUsuarioRepository, UsuarioRespository>();
             services.AddScoped<IEmpresaRepository, EmpresaRepository>();
             services.AddScoped<IServicoRespository, ServicoRepository>();
 

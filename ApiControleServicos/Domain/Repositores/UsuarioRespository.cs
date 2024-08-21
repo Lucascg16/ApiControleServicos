@@ -31,7 +31,7 @@ namespace ApiControleServicos.Domain
 			}).ToListAsync();
 		}
 
-		public async Task<UsuarioDto> GetById(int id)
+		public async Task<UsuarioDto> GetByIdDto(int id)
 		{
 			var pessoa = await _context.Usuario
 				.Where(x => x.Id == id)
@@ -44,6 +44,25 @@ namespace ApiControleServicos.Domain
 				}).FirstOrDefaultAsync();
 
 			return pessoa ?? new UsuarioDto();// se nulo retorna um dto vazio
+		}
+
+		public async Task<UsuarioModel> GetById(int id)
+		{
+			return await _context.Usuario.FindAsync(id) ?? new UsuarioModel();
+		}
+
+		public async Task<UsuarioDto> GetByName(string name)
+		{
+			var pessoa = await _context.Usuario.Where(x => x.Nome == name)
+				.Select(x => new UsuarioDto
+				{
+					Id= x.Id,
+					Nome = x.Nome,
+					Email = x.Email,
+					EmpresaId= x.EmpresaId,
+				}).FirstOrDefaultAsync();
+
+			return pessoa ?? new UsuarioDto();
 		}
 
 		public void Update(UsuarioModel usuario)
