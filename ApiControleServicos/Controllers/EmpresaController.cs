@@ -16,12 +16,11 @@ namespace ApiControleServicos.Controllers
 		}
 
 		[HttpGet]
-		[Route("{Id}")]
-		public  async Task<IActionResult> GetById(int Id)
+		public  async Task<IActionResult> GetById(int id)
 		{
 			try
 			{
-				var empresa = await _empresaServices.GetById(Id);
+				var empresa = await _empresaServices.GetById(id);
 				return Ok(empresa);
 			}
 			catch 

@@ -29,7 +29,20 @@ namespace ApiControleServicos.Controllers
 			}
 		}
 
-		//criar um get all com paginação
+		[HttpGet]
+		[Route("All")]
+		public async Task<IActionResult> GetAll(int page = 1, int itensPerPage = 10)
+		{
+			try
+			{
+				var usuarioList = await _usuarioServices.GetAll(page, itensPerPage);
+				return Ok(usuarioList);
+			}
+			catch
+			{
+				return BadRequest();
+			}
+		}
 
 		[HttpPost]
 		public async Task<IActionResult> Create([FromForm] CreateUsuarioModel novoUsuario)

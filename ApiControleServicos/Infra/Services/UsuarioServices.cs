@@ -19,9 +19,9 @@ namespace ApiControleServicos.Infra
 			await _usuarioRepository.Create(usuario);
 		}
 
-		public Task<List<UsuarioDto>> GetAll()
+		public Task<List<UsuarioDto>> GetAll(int page, int itensPerPage)
 		{
-			return _usuarioRepository.GetAll();
+			return _usuarioRepository.GetAll(page, itensPerPage);
 		}
 
 		public Task<UsuarioDto> GetById(int id)

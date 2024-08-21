@@ -20,9 +20,12 @@ namespace ApiControleServicos.Domain
 			await _context.SaveChangesAsync();
 		}
 
-		public async Task<List<UsuarioDto>> GetAll()
+		public async Task<List<UsuarioDto>> GetAll(int page, int itensPerPage)
 		{
-			return await _context.Usuario.Select(x => new UsuarioDto
+			return await _context.Usuario
+			.Skip((page - 1) * itensPerPage)
+			.Take(itensPerPage)
+			.Select(x => new UsuarioDto
 			{
 				Id = x.Id,
 				Nome = x.Nome,
