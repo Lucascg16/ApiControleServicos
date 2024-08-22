@@ -1,5 +1,4 @@
 ﻿using ApiControleServicos.Domain;
-using ApiControleServicos.Domain.Dto;
 using ApiControleServicos.Domain.Models;
 
 namespace ApiControleServicos.Infra

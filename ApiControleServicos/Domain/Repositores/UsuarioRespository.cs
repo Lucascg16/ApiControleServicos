@@ -1,5 +1,4 @@
-﻿using ApiControleServicos.Domain.Dto;
-using ApiControleServicos.Domain.Models;
+﻿using ApiControleServicos.Domain.Models;
 using ApiControleServicos.Infra;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,6 +21,9 @@ namespace ApiControleServicos.Domain
 
 		public async Task<List<UsuarioDto>> GetAll(int empresaId, int page, int itensPerPage)
 		{
+			if (empresaId == 0)
+				return [];
+
 			return await _context.Usuario.Where(x => !x.Excluido && x.EmpresaId == empresaId)
 			.Skip((page - 1) * itensPerPage)
 			.Take(itensPerPage)
@@ -31,7 +33,7 @@ namespace ApiControleServicos.Domain
 				Nome = x.Nome,
 				Email = x.Email,
 				EmpresaId = x.EmpresaId,
-			}).ToListAsync();
+			}).ToListAsync() ?? [];
 		}
 
 		public async Task<UsuarioDto> GetByIdDto(int id)

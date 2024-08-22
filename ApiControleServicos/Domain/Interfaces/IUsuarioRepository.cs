@@ -1,5 +1,4 @@
-﻿using ApiControleServicos.Domain.Dto;
-using ApiControleServicos.Domain.Models;
+﻿using ApiControleServicos.Domain.Models;
 
 namespace ApiControleServicos.Domain
 {

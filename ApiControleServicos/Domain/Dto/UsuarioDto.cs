@@ -1,4 +1,4 @@
-﻿namespace ApiControleServicos.Domain.Dto
+﻿namespace ApiControleServicos.Domain
 {
 	public class UsuarioDto
 	{
