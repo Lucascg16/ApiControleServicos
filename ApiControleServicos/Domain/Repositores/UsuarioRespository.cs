@@ -20,9 +20,9 @@ namespace ApiControleServicos.Domain
 			await _context.SaveChangesAsync();
 		}
 
-		public async Task<List<UsuarioDto>> GetAll(int page, int itensPerPage)
+		public async Task<List<UsuarioDto>> GetAll(int empresaId, int page, int itensPerPage)
 		{
-			return await _context.Usuario
+			return await _context.Usuario.Where(x => !x.Excluido && x.EmpresaId == empresaId)
 			.Skip((page - 1) * itensPerPage)
 			.Take(itensPerPage)
 			.Select(x => new UsuarioDto

@@ -1,6 +1,7 @@
 ﻿using ApiControleServicos.Domain;
 using ApiControleServicos.Infra;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace ApiControleServicos.Controllers
 {
@@ -31,11 +32,11 @@ namespace ApiControleServicos.Controllers
 
 		[HttpGet]
 		[Route("All")]
-		public async Task<IActionResult> GetAll(int page = 1, int itensPerPage = 10)
+		public async Task<IActionResult> GetAll([Required]int empresaId, int page = 1, int itensPerPage = 10)
 		{
 			try
 			{
-				var usuarioList = await _usuarioServices.GetAll(page, itensPerPage);
+				var usuarioList = await _usuarioServices.GetAll(empresaId ,page, itensPerPage);
 				return Ok(usuarioList);
 			}
 			catch

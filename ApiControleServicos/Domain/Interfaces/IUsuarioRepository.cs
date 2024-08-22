@@ -9,7 +9,7 @@ namespace ApiControleServicos.Domain
 		Task<UsuarioDto> GetByIdDto(int id);
 		Task<UsuarioModel> GetById(int id);
 		Task<UsuarioDto> GetByName(string name);
-		Task<List<UsuarioDto>> GetAll(int page, int itensPerPage);
+		Task<List<UsuarioDto>> GetAll(int empresaId ,int page, int itensPerPage);
 		void Update(UsuarioModel usuario);
 	}
 }
