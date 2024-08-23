@@ -6,7 +6,7 @@ namespace ApiControleServicos.Infra.Interfaces
     public interface IEmpresaServices
 	{
 		Task Create(CreateEmpresaModel empresa);
-		Task<EmpresaModel> GetById(int id);
+		Task<EmpresaDto> GetById(int id);
 		Task Update(UpdateEmpresaModel empresa);
 	}
 }

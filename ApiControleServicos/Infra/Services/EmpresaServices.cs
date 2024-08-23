@@ -19,9 +19,9 @@ namespace ApiControleServicos.Infra.Services
 			await _empresaRepository.Create(empresa);
 		}
 
-		public async Task<EmpresaModel> GetById(int id)
+		public async Task<EmpresaDto> GetById(int id)
 		{
-			return await _empresaRepository.GetById(id);
+			return await _empresaRepository.GetByIdDto(id);
 		}
 
 		public async Task Update(UpdateEmpresaModel empresaNova)

@@ -30,7 +30,7 @@ namespace ApiControleServicos.Infra.Configurations
             builder.Property(x => x.LucroLiquido);
 
             builder.Property(x => x.DataFinalizado)
-                .HasColumnName("DataInicio")
+                .HasColumnName("DataFinalizado")
                 .HasColumnType("dateTime");
 
             builder.HasOne<UsuarioModel>()

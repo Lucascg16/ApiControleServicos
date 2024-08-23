@@ -19,6 +19,11 @@ namespace ApiControleServicos.Domain
 			await _context.SaveChangesAsync();
 		}
 
+		public List<ServicoModel> GetAllOpen()
+		{
+			return new List<ServicoModel>();
+		}
+		
 		public async Task<List<ServicoModel>> GetAll()
 		{
 			return await _context.Servicos.ToListAsync() ?? [];//se nulo gera uma nova lista vazia

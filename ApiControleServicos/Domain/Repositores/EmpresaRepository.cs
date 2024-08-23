@@ -1,5 +1,6 @@
 ﻿using ApiControleServicos.Domain.Models;
 using ApiControleServicos.Infra;
+using Microsoft.EntityFrameworkCore;
 
 namespace ApiControleServicos.Domain
 {
@@ -16,6 +17,18 @@ namespace ApiControleServicos.Domain
 		{
 			await _context.Empresa.AddAsync(empresa);
 			await _context.SaveChangesAsync();
+		}
+
+		public async Task<EmpresaDto> GetByIdDto(int id)
+		{
+			return await _context.Empresa.Where(x => x.Id == id)
+				.Select(x => new EmpresaDto
+				{
+					Id = x.Id,
+					Nome = x.Nome,
+					Cnpj = x.Cnpj,
+					Cpf = x.Cpf,
+				}).FirstOrDefaultAsync() ?? new EmpresaDto();
 		}
 
 		public async Task<EmpresaModel> GetById(int id)
