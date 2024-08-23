@@ -1,5 +1,6 @@
 ﻿using ApiControleServicos.Domain.Models;
 using ApiControleServicos.Infra;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApiControleServicos.Domain
@@ -7,10 +8,12 @@ namespace ApiControleServicos.Domain
 	public class UsuarioRespository : IUsuarioRepository
 	{
 		private readonly ApiDbContext _context;
+		private readonly IMapper _mapper;
 
-		public UsuarioRespository (ApiDbContext context)
+		public UsuarioRespository (ApiDbContext context, IMapper mapper)
 		{
 			_context = context;
+			_mapper = mapper;
 		}
 
 		public async Task Create(UsuarioModel usuario)
@@ -21,34 +24,25 @@ namespace ApiControleServicos.Domain
 
 		public async Task<List<UsuarioDto>> GetAll(int empresaId, int page, int itensPerPage)
 		{
-			if (empresaId == 0)
-				return [];
+			List<UsuarioDto> Usuarios = [];
+			var usuarioList = await _context.Usuario.Where(x => !x.Excluido && x.EmpresaId == empresaId)
+									.Skip((page - 1) * itensPerPage).Take(itensPerPage).ToListAsync();
 
-			return await _context.Usuario.Where(x => !x.Excluido && x.EmpresaId == empresaId)
-			.Skip((page - 1) * itensPerPage)
-			.Take(itensPerPage)
-			.Select(x => new UsuarioDto
+			if (!usuarioList.Any())
+				return Usuarios;
+
+			foreach (var usuario in usuarioList) 
 			{
-				Id = x.Id,
-				Nome = x.Nome,
-				Email = x.Email,
-				EmpresaId = x.EmpresaId,
-			}).ToListAsync() ?? [];
+				Usuarios.Add(_mapper.Map<UsuarioDto>(usuario));
+			}
+
+			return Usuarios;
 		}
 
 		public async Task<UsuarioDto> GetByIdDto(int id)
 		{
-			var pessoa = await _context.Usuario
-				.Where(x => x.Id == id)
-				.Select(x => new UsuarioDto //Dto: retorna apenas informacao util
-				{
-					Id = x.Id,
-					Nome = x.Nome,
-					Email = x.Email,
-					EmpresaId = x.EmpresaId
-				}).FirstOrDefaultAsync();
-
-			return pessoa ?? new UsuarioDto();// se nulo retorna um dto vazio
+			var usuario = await _context.Usuario.Where(x => x.Id == id).FirstOrDefaultAsync();
+			return _mapper.Map<UsuarioDto>(usuario);// se nulo retorna um dto vazio
 		}
 
 		public async Task<UsuarioModel> GetById(int id)
@@ -58,16 +52,8 @@ namespace ApiControleServicos.Domain
 
 		public async Task<UsuarioDto> GetByName(string name)
 		{
-			var pessoa = await _context.Usuario.Where(x => x.Nome == name)
-				.Select(x => new UsuarioDto
-				{
-					Id= x.Id,
-					Nome = x.Nome,
-					Email = x.Email,
-					EmpresaId= x.EmpresaId,
-				}).FirstOrDefaultAsync();
-
-			return pessoa ?? new UsuarioDto();
+			var usuario = await _context.Usuario.Where(x => x.Nome == name).FirstOrDefaultAsync();
+			return _mapper.Map<UsuarioDto>(usuario);
 		}
 
 		public void Update(UsuarioModel usuario)

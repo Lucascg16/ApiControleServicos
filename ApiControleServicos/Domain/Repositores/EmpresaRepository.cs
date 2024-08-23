@@ -1,5 +1,6 @@
 ﻿using ApiControleServicos.Domain.Models;
 using ApiControleServicos.Infra;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApiControleServicos.Domain
@@ -7,10 +8,12 @@ namespace ApiControleServicos.Domain
 	public class EmpresaRepository : IEmpresaRepository
 	{
 		private readonly ApiDbContext _context;
+		private readonly IMapper _mapper;
 
-		public EmpresaRepository(ApiDbContext context)
+		public EmpresaRepository(ApiDbContext context, IMapper mapper)
 		{
 			_context = context;
+			_mapper = mapper;
 		}
 
 		public async Task Create(EmpresaModel empresa)
@@ -21,14 +24,8 @@ namespace ApiControleServicos.Domain
 
 		public async Task<EmpresaDto> GetByIdDto(int id)
 		{
-			return await _context.Empresa.Where(x => x.Id == id)
-				.Select(x => new EmpresaDto
-				{
-					Id = x.Id,
-					Nome = x.Nome,
-					Cnpj = x.Cnpj,
-					Cpf = x.Cpf,
-				}).FirstOrDefaultAsync() ?? new EmpresaDto();
+			var empresa = await _context.Empresa.Where(x => x.Id == id).FirstOrDefaultAsync();
+			return _mapper.Map<EmpresaDto>(empresa) ?? new EmpresaDto();
 		}
 
 		public async Task<EmpresaModel> GetById(int id)

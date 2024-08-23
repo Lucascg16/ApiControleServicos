@@ -27,8 +27,10 @@ namespace ApiControleServicos.Infra.Services
 		public async Task Update(UpdateEmpresaModel empresaNova)
 		{
 			var empresa = await _empresaRepository.GetById(empresaNova.Id);
-			empresa.UpdateEmpresa(empresaNova.Nome, empresaNova.Cnpj, empresaNova.Cpf);
+			if (empresa.Id == 0)
+				return;
 
+			empresa.UpdateEmpresa(empresaNova.Nome, empresaNova.Cnpj, empresaNova.Cpf);
 			_empresaRepository.Update(empresa);
 		}
 	}
