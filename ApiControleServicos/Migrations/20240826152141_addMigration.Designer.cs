@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApiControleServicos.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    [Migration("20240823190006_CorrigindoTabelaServico")]
-    partial class CorrigindoTabelaServico
+    [Migration("20240826152141_addMigration")]
+    partial class addMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -75,6 +75,9 @@ namespace ApiControleServicos.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<double?>("Custos")
+                        .HasColumnType("float");
+
                     b.Property<DateTime>("DataAtualizacao")
                         .HasColumnType("dateTime")
                         .HasColumnName("DataDeAtualizacao");
@@ -108,7 +111,7 @@ namespace ApiControleServicos.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("Nome");
 
-                    b.Property<double?>("Orcamento")
+                    b.Property<double?>("OrcamentoInicial")
                         .HasColumnType("float");
 
                     b.Property<int?>("UsuarioId")

@@ -22,6 +22,11 @@ namespace ApiControleServicos.Domain
 			await _context.SaveChangesAsync();
 		}
 
+		public async Task<List<EmpresaModel>> GetAll()
+		{
+			return await _context.Empresa.ToListAsync();
+		}
+
 		public async Task<EmpresaDto> GetByIdDto(int id)
 		{
 			var empresa = await _context.Empresa.Where(x => x.Id == id).FirstOrDefaultAsync();

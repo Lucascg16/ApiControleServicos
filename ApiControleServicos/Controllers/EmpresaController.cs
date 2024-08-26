@@ -1,5 +1,5 @@
 ﻿using ApiControleServicos.Domain;
-using ApiControleServicos.Infra.Interfaces;
+using ApiControleServicos.Infra;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApiControleServicos.Controllers
@@ -16,7 +16,7 @@ namespace ApiControleServicos.Controllers
 		}
 
 		[HttpGet]
-		public  async Task<IActionResult> GetById(int id)
+		public async Task<IActionResult> GetById(int id)
 		{
 			try
 			{
@@ -24,6 +24,19 @@ namespace ApiControleServicos.Controllers
 				return Ok(empresa);
 			}
 			catch 
+			{
+				return BadRequest();
+			}
+		}
+
+		[HttpGet("all")]
+		public async Task<IActionResult> GetAll()
+		{
+			try
+			{
+				return Ok(await _empresaServices.GetAll());
+			}
+			catch
 			{
 				return BadRequest();
 			}

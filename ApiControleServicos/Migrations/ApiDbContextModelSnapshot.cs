@@ -72,6 +72,9 @@ namespace ApiControleServicos.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<double?>("Custos")
+                        .HasColumnType("float");
+
                     b.Property<DateTime>("DataAtualizacao")
                         .HasColumnType("dateTime")
                         .HasColumnName("DataDeAtualizacao");
@@ -105,7 +108,7 @@ namespace ApiControleServicos.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("Nome");
 
-                    b.Property<double?>("Orcamento")
+                    b.Property<double?>("OrcamentoInicial")
                         .HasColumnType("float");
 
                     b.Property<int?>("UsuarioId")

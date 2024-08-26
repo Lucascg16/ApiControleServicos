@@ -25,7 +25,8 @@ namespace ApiControleServicos.Infra.Configurations
                 .HasColumnName("Descricao")
                 .HasColumnType("nvarchar(Max)");
 
-            builder.Property(x => x.Orcamento);
+            builder.Property(x => x.Custos);
+            builder.Property(x => x.OrcamentoInicial);
             builder.Property(x => x.ValorFaturado);
             builder.Property(x => x.LucroLiquido);
 

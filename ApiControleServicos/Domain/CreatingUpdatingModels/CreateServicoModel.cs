@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ApiControleServicos.Domain.CreatingUpdatingModels
+namespace ApiControleServicos.Domain
 {
 	public class CreateServicoModel
 	{
@@ -8,6 +8,12 @@ namespace ApiControleServicos.Domain.CreatingUpdatingModels
 		public string Nome { get; set; } = string.Empty;
 		public string Description { get; set; } = string.Empty;
 		[Required]
-		public double Orcamento { get; set; }
+		public double Custos { get; set; }
+		[Required]
+		public double OrcamentoInicial { get; set; }
+		[Required]
+		public int UsuarioId { get; set; }
+		[Required]
+		public int EmpresaId { get; set; }
 	}
 }

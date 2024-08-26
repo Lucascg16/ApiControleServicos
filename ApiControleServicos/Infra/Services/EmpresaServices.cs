@@ -1,8 +1,7 @@
 ﻿using ApiControleServicos.Domain;
 using ApiControleServicos.Domain.Models;
-using ApiControleServicos.Infra.Interfaces;
 
-namespace ApiControleServicos.Infra.Services
+namespace ApiControleServicos.Infra
 {
     public class EmpresaServices : IEmpresaServices
 	{
@@ -17,6 +16,11 @@ namespace ApiControleServicos.Infra.Services
 		{
 			EmpresaModel empresa = new(novaEmpresa.Nome, novaEmpresa.Cnpj, novaEmpresa.Cpf);
 			await _empresaRepository.Create(empresa);
+		}
+
+		public async Task<List<EmpresaModel>> GetAll()
+		{
+			return await _empresaRepository.GetAll();
 		}
 
 		public async Task<EmpresaDto> GetById(int id)

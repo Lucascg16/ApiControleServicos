@@ -1,6 +1,4 @@
 ﻿using ApiControleServicos.Domain;
-using ApiControleServicos.Infra.Interfaces;
-using ApiControleServicos.Infra.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApiControleServicos.Infra
@@ -16,6 +14,7 @@ namespace ApiControleServicos.Infra
             //Services
             services.AddScoped<IUsuarioServices, UsuarioServices>();
 			services.AddScoped<IEmpresaServices, EmpresaServices>();
+            services.AddScoped<IServicoServices, ServicoServices>();
 
 			//Respositores
 			services.AddScoped<IUsuarioRepository, UsuarioRespository>();

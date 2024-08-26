@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ApiControleServicos.Migrations
 {
     /// <inheritdoc />
-    public partial class AdicionandoTabelasIniciais : Migration
+    public partial class addMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,12 +17,12 @@ namespace ApiControleServicos.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Excluido = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
-                    DataDeCriacao = table.Column<DateTime>(type: "dateTime", nullable: false),
-                    DataDeAtualizacao = table.Column<DateTime>(type: "dateTime", nullable: false),
                     Nome = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Cnpj = table.Column<string>(type: "nvarchar(14)", nullable: true),
-                    Cpf = table.Column<string>(type: "nvarchar(11)", nullable: true)
+                    Cpf = table.Column<string>(type: "nvarchar(11)", nullable: true),
+                    Excluido = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    DataDeCriacao = table.Column<DateTime>(type: "dateTime", nullable: false),
+                    DataDeAtualizacao = table.Column<DateTime>(type: "dateTime", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -35,12 +35,12 @@ namespace ApiControleServicos.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Excluido = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
-                    DataDeCriacao = table.Column<DateTime>(type: "dateTime", nullable: false),
-                    DataDeAtualizacao = table.Column<DateTime>(type: "dateTime", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EmpresaId = table.Column<int>(type: "int", nullable: false)
+                    EmpresaId = table.Column<int>(type: "int", nullable: false),
+                    Excluido = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    DataDeCriacao = table.Column<DateTime>(type: "dateTime", nullable: false),
+                    DataDeAtualizacao = table.Column<DateTime>(type: "dateTime", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -58,17 +58,18 @@ namespace ApiControleServicos.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Excluido = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
-                    DataDeCriacao = table.Column<DateTime>(type: "dateTime", nullable: false),
-                    DataDeAtualizacao = table.Column<DateTime>(type: "dateTime", nullable: false),
                     Nome = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Descricao = table.Column<string>(type: "nvarchar(Max)", nullable: true),
-                    Orcamento = table.Column<double>(type: "float", nullable: true),
+                    Custos = table.Column<double>(type: "float", nullable: true),
+                    OrcamentoInicial = table.Column<double>(type: "float", nullable: true),
                     ValorFaturado = table.Column<double>(type: "float", nullable: true),
                     LucroLiquido = table.Column<double>(type: "float", nullable: true),
-                    DataInicio = table.Column<DateTime>(type: "dateTime", nullable: true),
+                    DataFinalizado = table.Column<DateTime>(type: "dateTime", nullable: true),
                     UsuarioId = table.Column<int>(type: "int", nullable: true),
-                    EmpresaId = table.Column<int>(type: "int", nullable: true)
+                    EmpresaId = table.Column<int>(type: "int", nullable: true),
+                    Excluido = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    DataDeCriacao = table.Column<DateTime>(type: "dateTime", nullable: false),
+                    DataDeAtualizacao = table.Column<DateTime>(type: "dateTime", nullable: false)
                 },
                 constraints: table =>
                 {
