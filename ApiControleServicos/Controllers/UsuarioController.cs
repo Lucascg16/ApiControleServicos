@@ -1,10 +1,12 @@
 ﻿using ApiControleServicos.Domain;
 using ApiControleServicos.Infra;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
 namespace ApiControleServicos.Controllers
 {
+	[Authorize]
 	[ApiController]
 	[Route("api/v1/usuario")]
 	public class UsuarioController : ControllerBase

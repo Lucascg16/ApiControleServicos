@@ -1,9 +1,11 @@
 ﻿using ApiControleServicos.Domain;
 using ApiControleServicos.Infra;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApiControleServicos.Controllers
 {
+	[Authorize]
     [ApiController]
 	[Route("api/v1/empresa")]
 	public class EmpresaController : ControllerBase
