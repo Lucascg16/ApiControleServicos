@@ -2,7 +2,7 @@
 
 namespace ApiControleServicos.Domain
 {
-    public class CreateEmpresaModel
+    public record CreateEmpresaModel
     {
         [Required]
         public string Nome { get; set; } = string.Empty;

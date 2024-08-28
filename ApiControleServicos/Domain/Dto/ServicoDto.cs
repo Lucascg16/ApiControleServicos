@@ -1,6 +1,6 @@
 ﻿namespace ApiControleServicos.Domain
 {
-	public class ServicoDto
+	public record ServicoDto
 	{
 		public int Id { get; set; }
 		public string? Nome { get; set; }
@@ -9,7 +9,7 @@
 		public double? OrcamentoInicial { get; set; }
 		public double? ValorFaturado { get; set; }
 		public double? LucroLiquido{ get; set; }
-		public bool Exluido { get; set; } = false;
+		public bool Excluido { get; set; }
 		public DateTime? DataCriacao { get; set; }
 		public DateTime? DataFinalizado	{ get; set; }
 	}

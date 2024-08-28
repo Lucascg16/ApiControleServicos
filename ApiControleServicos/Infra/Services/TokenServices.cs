@@ -4,19 +4,19 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace ApiControleServicos.Infra.Services
+namespace ApiControleServicos.Infra
 {
-	public class TokenServices
+	public class TokenServices : ITokenServices
 	{
-		public static object GenerateToken(UsuarioModel usuario)
+		public string GenerateToken(UsuarioModel usuario) 
 		{
 			var key = Encoding.ASCII.GetBytes(Settings.Secret);
 			var tokenConfig = new SecurityTokenDescriptor
 			{
-				Subject = new System.Security.Claims.ClaimsIdentity(new Claim[]
-				{
+				Subject = new System.Security.Claims.ClaimsIdentity(
+				[
 					new Claim("usuarioId", usuario.Id.ToString()),
-				}),
+				]),
 				Expires = DateTime.Now.AddHours(4),
 				SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
 			};
@@ -24,10 +24,7 @@ namespace ApiControleServicos.Infra.Services
 			var tokenHand = new JwtSecurityTokenHandler();
 			var token = tokenHand.CreateToken(tokenConfig);
 
-			return new
-			{
-				Token = tokenHand.WriteToken(token)
-			};
+			return tokenHand.WriteToken(token);
 		}
 	}
 }

@@ -1,6 +1,5 @@
-﻿using ApiControleServicos.Infra.Services;
+﻿using ApiControleServicos.Infra;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel;
 
 namespace ApiControleServicos.Controllers
 {
@@ -8,16 +7,22 @@ namespace ApiControleServicos.Controllers
 	[Route("api/v1/auth")]
 	public class AuthenticateController : ControllerBase
 	{
+		private readonly ITokenServices _tokenServices;
+		public AuthenticateController(ITokenServices tokenServices) 
+		{
+			_tokenServices = tokenServices;
+		}
+
 		[HttpPost]
 		public IActionResult Authentication(string username, string password)
 		{
 			if(username == "lucas" && password == "123")
 			{
-				var token = TokenServices.GenerateToken(new Domain.Models.UsuarioModel());
+				var token = _tokenServices.GenerateToken(new Domain.Models.UsuarioModel());
 				return Ok(token);
 			}
 
-			return BadRequest("usuario ou senha errado");
+			return Unauthorized("Username ou senha invalidos");
 		}
 	}
 }

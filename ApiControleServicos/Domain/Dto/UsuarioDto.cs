@@ -1,6 +1,6 @@
 ﻿namespace ApiControleServicos.Domain
 {
-	public class UsuarioDto
+	public record UsuarioDto
 	{
 		public int Id { get; set; }
 		public string? Nome { get; set; }

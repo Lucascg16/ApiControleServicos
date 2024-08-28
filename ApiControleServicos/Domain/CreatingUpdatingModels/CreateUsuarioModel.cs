@@ -2,7 +2,7 @@
 
 namespace ApiControleServicos.Domain
 {
-	public class CreateUsuarioModel
+	public record CreateUsuarioModel
 	{
 		[Required]
 		public string Nome { get; set; } = string.Empty;

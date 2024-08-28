@@ -2,7 +2,7 @@
 
 namespace ApiControleServicos.Domain
 {
-	public class UpdateEmpresaModel
+	public record UpdateEmpresaModel
 	{
 		[Required]
 		public int Id { get; set; }

@@ -15,6 +15,7 @@ namespace ApiControleServicos.Infra
             services.AddScoped<IUsuarioServices, UsuarioServices>();
 			services.AddScoped<IEmpresaServices, EmpresaServices>();
             services.AddScoped<IServicoServices, ServicoServices>();
+            services.AddScoped<ITokenServices, TokenServices>();
 
 			//Respositores
 			services.AddScoped<IUsuarioRepository, UsuarioRespository>();
