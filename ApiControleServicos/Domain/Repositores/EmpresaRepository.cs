@@ -29,13 +29,19 @@ namespace ApiControleServicos.Domain
 
 		public async Task<EmpresaDto> GetByIdDto(int id)
 		{
-			var empresa = await _context.Empresa.Where(x => x.Id == id).FirstOrDefaultAsync();
-			return _mapper.Map<EmpresaDto>(empresa) ?? new EmpresaDto();
+			var empresa = await _context.Empresa.Where(x => x.Id == id).FirstOrDefaultAsync() ?? new();
+			return _mapper.Map<EmpresaDto>(empresa);
 		}
 
 		public async Task<EmpresaModel> GetById(int id)
 		{
 			return await _context.Empresa.FindAsync(id) ?? new EmpresaModel();
+		}
+
+		public async Task<EmpresaDto> GetByName(string name)
+		{
+			var empresa = await _context.Empresa.FindAsync(name) ?? new EmpresaModel();
+			return _mapper.Map<EmpresaDto>(empresa);
 		}
 
 		public void Update(EmpresaModel empresa)

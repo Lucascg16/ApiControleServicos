@@ -8,6 +8,7 @@ namespace ApiControleServicos.Infra
 		Task Create(CreateEmpresaModel empresa);
 		Task<List<EmpresaModel>> GetAll();
 		Task<EmpresaDto> GetById(int id);
+		Task<EmpresaDto> GetByName(string name);
 		Task Update(UpdateEmpresaModel empresa);
 	}
 }

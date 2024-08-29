@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace ApiControleServicos.Domain
 {
@@ -11,9 +12,9 @@ namespace ApiControleServicos.Domain
 		public string Email { get; set; } = string.Empty;
 		[Required]
 		public string Password {  get; set; } = string.Empty;
-		[Required]
+		[DefaultValue("none")]
 		public string Role { get; set; } = "none";
-		[Required]
+		[DefaultValue(0)]
 		public int EmpresaId { get; set; }
 	}
 }

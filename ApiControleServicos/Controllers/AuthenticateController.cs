@@ -33,26 +33,20 @@ namespace ApiControleServicos.Controllers
 			return Ok(token);
 		}
 
-		[HttpPost("usuario")]
-		public async Task<IActionResult> CreateAccount([FromForm] CreateUsuarioModel novoUsuario)
+		[HttpPost("create")]
+		public async Task<IActionResult> CreateAccount([FromForm] CreateContaModel novaConta)
 		{
 			try
 			{
-				await _usuarioServices.Create(novoUsuario);
-				return Ok();
-			}
-			catch
-			{
-				return BadRequest();
-			}
-		}
+				if (novaConta is null || novaConta.Empresa is null || novaConta.Usuario is null)
+					return BadRequest();
 
-		[HttpPost("empresa")]
-		public async Task<IActionResult> CreateEmpresa([FromForm] CreateEmpresaModel novaEmpresa)
-		{
-			try
-			{
-				await _empresaServices.Create(novaEmpresa);
+				await _empresaServices.Create(novaConta.Empresa);
+				var empresa = _empresaServices.GetByName(novaConta.Empresa.Nome);
+
+				novaConta.Usuario.EmpresaId = empresa.Id;
+				await _usuarioServices.Create(novaConta.Usuario);
+
 				return Ok();
 			}
 			catch

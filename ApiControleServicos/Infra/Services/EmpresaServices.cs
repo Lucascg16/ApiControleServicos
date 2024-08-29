@@ -14,7 +14,15 @@ namespace ApiControleServicos.Infra
 
 		public async Task Create(CreateEmpresaModel novaEmpresa)
 		{
-			EmpresaModel empresa = new(novaEmpresa.Nome, novaEmpresa.Cnpj, novaEmpresa.Cpf);
+			string normalizedCNPJ = "", normalizedCPF = "";
+
+			if (novaEmpresa.Cnpj is not null)
+				normalizedCNPJ = novaEmpresa.Cnpj.Replace(".", "").Replace("-", "").Replace("/","");
+
+			if (novaEmpresa.Cpf is not null)
+				normalizedCPF = novaEmpresa.Cpf.Replace(".", "").Replace("-", "");
+
+			EmpresaModel empresa = new(novaEmpresa.Nome, normalizedCNPJ, normalizedCPF);
 			await _empresaRepository.Create(empresa);
 		}
 
@@ -26,6 +34,11 @@ namespace ApiControleServicos.Infra
 		public async Task<EmpresaDto> GetById(int id)
 		{
 			return await _empresaRepository.GetByIdDto(id);
+		}
+
+		public async Task<EmpresaDto> GetByName(string name)
+		{
+			return await _empresaRepository.GetByName(name);
 		}
 
 		public async Task Update(UpdateEmpresaModel empresaNova)
