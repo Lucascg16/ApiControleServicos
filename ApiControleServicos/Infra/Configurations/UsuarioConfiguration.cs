@@ -33,7 +33,8 @@ namespace ApiControleServicos.Infra.Configurations
 	            .HasColumnType("nvarchar(500)");
 
             builder.Property(x => x.Role)
-                .HasDefaultValue(RoleEnum.None);
+                .IsRequired()
+                .HasDefaultValue("none");
 
 			builder.HasOne<EmpresaModel>()
                 .WithMany()

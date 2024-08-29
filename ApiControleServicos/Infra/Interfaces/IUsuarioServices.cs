@@ -12,6 +12,6 @@ namespace ApiControleServicos.Infra
 		Task<List<UsuarioDto>> GetAll(int empresaId, int page, int itensPerPage);
 		Task Update(UpdateUsuarioModel usuario);
 		Task UpdateSenha(int id, string senha);
-		Task UpdateRole(int id, RoleEnum role);
+		Task UpdateRole(int id, string role);
 	}
 }

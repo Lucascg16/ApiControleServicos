@@ -77,7 +77,7 @@ namespace ApiControleServicos.Controllers
 		}
 
 		[HttpPatch("role")]
-		public async Task<IActionResult> UpdateRole(int id, [Required] RoleEnum role)
+		public async Task<IActionResult> UpdateRole(int id, [Required] string role)
 		{
 			try
 			{

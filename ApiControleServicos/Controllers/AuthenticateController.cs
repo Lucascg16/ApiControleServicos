@@ -10,10 +10,12 @@ namespace ApiControleServicos.Controllers
 	{
 		private readonly ITokenServices _tokenServices;
 		private readonly IUsuarioServices _usuarioServices;
-		public AuthenticateController(ITokenServices tokenServices, IUsuarioServices services) 
+		private readonly IEmpresaServices _empresaServices;
+		public AuthenticateController(ITokenServices tokenServices, IUsuarioServices services, IEmpresaServices empresa) 
 		{
 			_tokenServices = tokenServices;
 			_usuarioServices = services;
+			_empresaServices = empresa;
 		}
 
 		[HttpPost]
@@ -24,21 +26,33 @@ namespace ApiControleServicos.Controllers
 			if (usuarioDataBase.Id == 0)
 				return Unauthorized("Email ou senha invalidos");
 
-			if(email == usuarioDataBase.Email && password == usuarioDataBase.Password)
-			{
-				var token = _tokenServices.GenerateToken(usuarioDataBase);
-				return Ok(token);
-			}
+			if(password != usuarioDataBase.Password)
+				return Unauthorized("Email ou senha invalidos");
 
-			return Unauthorized("Email ou senha invalidos");
+			var token = _tokenServices.GenerateToken(usuarioDataBase);
+			return Ok(token);
 		}
 
-		[HttpPost("create")]
+		[HttpPost("usuario")]
 		public async Task<IActionResult> CreateAccount([FromForm] CreateUsuarioModel novoUsuario)
 		{
 			try
 			{
 				await _usuarioServices.Create(novoUsuario);
+				return Ok();
+			}
+			catch
+			{
+				return BadRequest();
+			}
+		}
+
+		[HttpPost("empresa")]
+		public async Task<IActionResult> CreateEmpresa([FromForm] CreateEmpresaModel novaEmpresa)
+		{
+			try
+			{
+				await _empresaServices.Create(novaEmpresa);
 				return Ok();
 			}
 			catch

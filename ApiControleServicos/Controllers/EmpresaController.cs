@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ApiControleServicos.Controllers
 {
-	[Authorize]
+	[Authorize(Roles = "Admin")]
     [ApiController]
 	[Route("api/v1/empresa")]
 	public class EmpresaController : ControllerBase
@@ -37,20 +37,6 @@ namespace ApiControleServicos.Controllers
 			try
 			{
 				return Ok(await _empresaServices.GetAll());
-			}
-			catch
-			{
-				return BadRequest();
-			}
-		}
-
-		[HttpPost]
-		public async Task<IActionResult> Create([FromForm] CreateEmpresaModel novaEmpresa)
-		{
-			try
-			{
-				await _empresaServices.Create(novaEmpresa);
-				return Ok();
 			}
 			catch
 			{

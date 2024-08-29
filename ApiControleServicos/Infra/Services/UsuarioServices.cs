@@ -14,7 +14,7 @@ namespace ApiControleServicos.Infra
 
 		public async Task Create(CreateUsuarioModel novoUsuario)
 		{
-			UsuarioModel usuario = new(novoUsuario.Nome, novoUsuario.Email, novoUsuario.Password, novoUsuario.EmpresaId);
+			UsuarioModel usuario = new(novoUsuario.Nome, novoUsuario.Email, novoUsuario.Password, novoUsuario.Role, novoUsuario.EmpresaId);
 			await _usuarioRepository.Create(usuario);
 		}
 
@@ -46,7 +46,7 @@ namespace ApiControleServicos.Infra
 			_usuarioRepository.Update(usuario);
 		}
 
-		public async Task UpdateRole(int id, RoleEnum role)
+		public async Task UpdateRole(int id, string role)
 		{
 			var usuario = await _usuarioRepository.GetById(id);
 			usuario.UpdateRole(role);
