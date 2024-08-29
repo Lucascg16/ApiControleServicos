@@ -1,5 +1,6 @@
 ﻿using ApiControleServicos.Domain;
 using ApiControleServicos.Infra;
+using AutoMapper.Configuration.Annotations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
@@ -67,6 +68,34 @@ namespace ApiControleServicos.Controllers
 			try
 			{
 				await _usuarioServices.Update(usuario);
+				return Ok();
+			}
+			catch
+			{
+				return BadRequest();
+			}
+		}
+
+		[HttpPatch("role")]
+		public async Task<IActionResult> UpdateRole(int id, [Required] RoleEnum role)
+		{
+			try
+			{
+				await _usuarioServices.UpdateRole(id, role);
+				return Ok();
+			}
+			catch
+			{
+				return BadRequest();
+			}
+		}
+
+		[HttpPatch("password")]
+		public async Task<IActionResult> UpdateSenha(int id, [Required] string senha)
+		{
+			try
+			{
+				await _usuarioServices.UpdateSenha(id, senha);
 				return Ok();
 			}
 			catch

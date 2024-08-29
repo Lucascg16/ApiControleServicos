@@ -14,7 +14,7 @@ namespace ApiControleServicos.Infra
 
 		public async Task Create(CreateUsuarioModel novoUsuario)
 		{
-			UsuarioModel usuario = new(novoUsuario.Nome, novoUsuario.Email, novoUsuario.EmpresaId);
+			UsuarioModel usuario = new(novoUsuario.Nome, novoUsuario.Email, novoUsuario.Password, novoUsuario.EmpresaId);
 			await _usuarioRepository.Create(usuario);
 		}
 
@@ -33,10 +33,31 @@ namespace ApiControleServicos.Infra
 			return _usuarioRepository.GetByName(name);
 		}
 
+		public Task<UsuarioModel> GetByUserName(string username)
+		{
+			return _usuarioRepository.GetByUserName(username);
+		}
+
 		public async Task Update(UpdateUsuarioModel usuarioNovo)
 		{
 			var usuario = await _usuarioRepository.GetById(usuarioNovo.Id);
 			usuario.UpdateUsuario(usuarioNovo.Nome, usuarioNovo.Email);
+
+			_usuarioRepository.Update(usuario);
+		}
+
+		public async Task UpdateRole(int id, RoleEnum role)
+		{
+			var usuario = await _usuarioRepository.GetById(id);
+			usuario.UpdateRole(role);
+
+			_usuarioRepository.Update(usuario);
+		}
+
+		public async Task UpdateSenha(int id, string senha)
+		{
+			var usuario = await _usuarioRepository.GetById(id);
+			usuario.UpdateSenha(senha);
 
 			_usuarioRepository.Update(usuario);
 		}

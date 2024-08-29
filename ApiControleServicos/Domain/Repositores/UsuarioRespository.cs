@@ -50,6 +50,11 @@ namespace ApiControleServicos.Domain
 			return await _context.Usuario.FindAsync(id) ?? new UsuarioModel();
 		}
 
+		public async Task<UsuarioModel> GetByUserName(string userName)
+		{
+			return await _context.Usuario.Where(x => x.Email == userName).FirstOrDefaultAsync() ?? new UsuarioModel();
+		}
+
 		public async Task<UsuarioDto> GetByName(string name)
 		{
 			var usuario = await _context.Usuario.Where(x => x.Nome == name).FirstOrDefaultAsync();

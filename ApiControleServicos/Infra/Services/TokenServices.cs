@@ -16,6 +16,7 @@ namespace ApiControleServicos.Infra
 				Subject = new System.Security.Claims.ClaimsIdentity(
 				[
 					new Claim("usuarioId", usuario.Id.ToString()),
+					new Claim("UsuarioRole", usuario.Role.ToString())
 				]),
 				Expires = DateTime.Now.AddHours(4),
 				SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

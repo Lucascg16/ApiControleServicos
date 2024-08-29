@@ -1,4 +1,5 @@
-﻿using ApiControleServicos.Infra;
+﻿using ApiControleServicos.Domain;
+using ApiControleServicos.Infra;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApiControleServicos.Controllers
@@ -8,21 +9,42 @@ namespace ApiControleServicos.Controllers
 	public class AuthenticateController : ControllerBase
 	{
 		private readonly ITokenServices _tokenServices;
-		public AuthenticateController(ITokenServices tokenServices) 
+		private readonly IUsuarioServices _usuarioServices;
+		public AuthenticateController(ITokenServices tokenServices, IUsuarioServices services) 
 		{
 			_tokenServices = tokenServices;
+			_usuarioServices = services;
 		}
 
 		[HttpPost]
-		public IActionResult Authentication(string username, string password)
+		public async Task<IActionResult> Authentication(string email, string password)
 		{
-			if(username == "lucas" && password == "123")
+			var usuarioDataBase = await _usuarioServices.GetByUserName(email);
+
+			if (usuarioDataBase.Id == 0)
+				return Unauthorized("Email ou senha invalidos");
+
+			if(email == usuarioDataBase.Email && password == usuarioDataBase.Password)
 			{
-				var token = _tokenServices.GenerateToken(new Domain.Models.UsuarioModel());
+				var token = _tokenServices.GenerateToken(usuarioDataBase);
 				return Ok(token);
 			}
 
-			return Unauthorized("Username ou senha invalidos");
+			return Unauthorized("Email ou senha invalidos");
+		}
+
+		[HttpPost("create")]
+		public async Task<IActionResult> CreateAccount([FromForm] CreateUsuarioModel novoUsuario)
+		{
+			try
+			{
+				await _usuarioServices.Create(novoUsuario);
+				return Ok();
+			}
+			catch
+			{
+				return BadRequest();
+			}
 		}
 	}
 }

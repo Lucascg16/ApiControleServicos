@@ -1,4 +1,5 @@
-﻿using ApiControleServicos.Domain.Models;
+﻿using ApiControleServicos.Domain;
+using ApiControleServicos.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -26,7 +27,15 @@ namespace ApiControleServicos.Infra.Configurations
                 .HasColumnName("Email")
                 .HasColumnType("nvarchar(max)");
 
-            builder.HasOne<EmpresaModel>()
+			builder.Property(x => x.Password)
+	            .IsRequired()
+	            .HasColumnName("Password")
+	            .HasColumnType("nvarchar(500)");
+
+            builder.Property(x => x.Role)
+                .HasDefaultValue(RoleEnum.None);
+
+			builder.HasOne<EmpresaModel>()
                 .WithMany()
                 .HasForeignKey(x => x.EmpresaId)
                 .IsRequired()
