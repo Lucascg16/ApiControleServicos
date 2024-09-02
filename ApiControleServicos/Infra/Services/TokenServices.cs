@@ -11,21 +11,23 @@ namespace ApiControleServicos.Infra
 		public string GenerateToken(UsuarioModel usuario) 
 		{
 			var key = Encoding.ASCII.GetBytes(Settings.Secret);
-			var tokenConfig = new SecurityTokenDescriptor
-			{
-				Subject = new System.Security.Claims.ClaimsIdentity(
-				[
-					new Claim(type: ClaimTypes.NameIdentifier, usuario.Id.ToString()),
-					new Claim(type: ClaimTypes.Role, usuario.Role.ToString())
-				]),
-				Expires = DateTime.Now.AddHours(4),
-				SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-			};
+			var signingCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);
+			var issuer = Settings.Issuer;
+			var audience = Settings.Audience;
 
-			var tokenHand = new JwtSecurityTokenHandler();
-			var token = tokenHand.CreateToken(tokenConfig);
+			var tokenOptions = new JwtSecurityToken(
+				issuer: issuer,
+				audience: audience,
+				claims: new[]
+				{
+					new Claim("id", usuario.Id.ToString()),
+					new Claim("role", usuario.Role.ToString())
+				},
+				expires: DateTime.Now.AddHours(2),
+				signingCredentials: signingCredentials
+			);
 
-			return tokenHand.WriteToken(token);
+			return new JwtSecurityTokenHandler().WriteToken(tokenOptions);
 		}
 	}
 }

@@ -24,16 +24,23 @@ namespace ApiControleServicos.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Authentication(string email, string password)
 		{
-			var usuarioDataBase = await _usuarioServices.GetByUserName(email);
+			try
+			{
+				var usuarioDataBase = await _usuarioServices.GetByUserName(email);
 
-			if (usuarioDataBase.Id == 0)
-				return Unauthorized("Email ou senha invalidos");
+				if (usuarioDataBase.Id == 0)
+					return Unauthorized("Email ou senha invalidos");
 
-			if(_criptoServices.Criptografa(password) != usuarioDataBase.Password)
-				return Unauthorized("Email ou senha invalidos");
+				if (_criptoServices.Criptografa(password) != usuarioDataBase.Password)
+					return Unauthorized("Email ou senha invalidos");
 
-			var token = _tokenServices.GenerateToken(usuarioDataBase);
-			return Ok(token);
+				var token = _tokenServices.GenerateToken(usuarioDataBase);
+				return Ok(token);
+			}
+			catch(Exception ex)
+			{
+				return BadRequest(ex.Message);
+			}
 		}
 
 		[HttpPost("create")]
