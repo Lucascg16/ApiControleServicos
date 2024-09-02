@@ -6,15 +6,18 @@ namespace ApiControleServicos.Infra
 	public class UsuarioServices : IUsuarioServices
 	{
 		private readonly IUsuarioRepository _usuarioRepository;
+		private readonly ICriptoServices _criptoServices;
 
-		public UsuarioServices(IUsuarioRepository usuarioRepository)
+		public UsuarioServices(IUsuarioRepository usuarioRepository, ICriptoServices criptoServices)
 		{
 			_usuarioRepository = usuarioRepository;
+			_criptoServices = criptoServices;
 		}
 
 		public async Task Create(CreateUsuarioModel novoUsuario)
 		{
-			UsuarioModel usuario = new(novoUsuario.Nome, novoUsuario.Email, novoUsuario.Password, novoUsuario.Role, novoUsuario.EmpresaId);
+			UsuarioModel usuario = new(novoUsuario.Nome, novoUsuario.Email, _criptoServices.Criptografa(novoUsuario.Password),
+									novoUsuario.Role, novoUsuario.EmpresaId);
 			await _usuarioRepository.Create(usuario);
 		}
 
@@ -57,7 +60,7 @@ namespace ApiControleServicos.Infra
 		public async Task UpdateSenha(int id, string senha)
 		{
 			var usuario = await _usuarioRepository.GetById(id);
-			usuario.UpdateSenha(senha);
+			usuario.UpdateSenha(_criptoServices.Criptografa(senha));
 
 			_usuarioRepository.Update(usuario);
 		}

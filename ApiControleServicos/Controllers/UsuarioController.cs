@@ -1,6 +1,5 @@
 ﻿using ApiControleServicos.Domain;
 using ApiControleServicos.Infra;
-using AutoMapper.Configuration.Annotations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
@@ -33,8 +32,8 @@ namespace ApiControleServicos.Controllers
 			}
 		}
 
-		[HttpGet]
-		[Route("All")]
+		[HttpGet("All")]
+		[Authorize(Roles = "Admin")]
 		public async Task<IActionResult> GetAll([Required]int empresaId, int page = 1, int itensPerPage = 10)
 		{
 			try
@@ -77,6 +76,8 @@ namespace ApiControleServicos.Controllers
 		}
 
 		[HttpPatch("role")]
+		[Authorize(Roles = "Admin")]
+
 		public async Task<IActionResult> UpdateRole(int id, [Required] string role)
 		{
 			try
