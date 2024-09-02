@@ -16,10 +16,12 @@ namespace ApiControleServicos.Domain
 			_mapper = mapper;
 		}
 
-		public async Task Create(EmpresaModel empresa)
+		public async Task<int> Create(EmpresaModel empresa)
 		{
 			await _context.Empresa.AddAsync(empresa);
 			await _context.SaveChangesAsync();
+
+			return empresa.Id;
 		}
 
 		public async Task<List<EmpresaModel>> GetAll()
@@ -35,12 +37,12 @@ namespace ApiControleServicos.Domain
 
 		public async Task<EmpresaModel> GetById(int id)
 		{
-			return await _context.Empresa.FindAsync(id) ?? new EmpresaModel();
+			return await _context.Empresa.FindAsync(id) ?? new();
 		}
 
 		public async Task<EmpresaDto> GetByName(string name)
 		{
-			var empresa = await _context.Empresa.FindAsync(name) ?? new EmpresaModel();
+			var empresa = await _context.Empresa.FindAsync(name) ?? new();
 			return _mapper.Map<EmpresaDto>(empresa);
 		}
 

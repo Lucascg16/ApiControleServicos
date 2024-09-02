@@ -12,7 +12,7 @@ namespace ApiControleServicos.Infra
 			_empresaRepository = empresaRepository;
 		}
 
-		public async Task Create(CreateEmpresaModel novaEmpresa)
+		public async Task<int> Create(CreateEmpresaModel novaEmpresa)
 		{
 			string normalizedCNPJ = "", normalizedCPF = "";
 
@@ -23,7 +23,7 @@ namespace ApiControleServicos.Infra
 				normalizedCPF = novaEmpresa.Cpf.Replace(".", "").Replace("-", "");
 
 			EmpresaModel empresa = new(novaEmpresa.Nome, normalizedCNPJ, normalizedCPF);
-			await _empresaRepository.Create(empresa);
+			return await _empresaRepository.Create(empresa);
 		}
 
 		public async Task<List<EmpresaModel>> GetAll()

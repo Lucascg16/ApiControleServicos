@@ -5,7 +5,7 @@
         public string? Nome { get; set; }//TODO: Add mensagens de erro quando necessario
         public string? Email { get; set; }
         public string? Password { get; set; }
-        public string? Role { get; set; }
+        public string Role { get; set; } = "none";
         public int EmpresaId { get; set; }
 
         public UsuarioModel()

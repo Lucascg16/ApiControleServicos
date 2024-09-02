@@ -44,10 +44,9 @@ namespace ApiControleServicos.Controllers
 				if (novaConta is null || novaConta.Empresa is null || novaConta.Usuario is null)
 					return BadRequest();
 
-				await _empresaServices.Create(novaConta.Empresa);
-				var empresa = _empresaServices.GetByName(novaConta.Empresa.Nome);
+				var empresaId = await _empresaServices.Create(novaConta.Empresa);
 
-				novaConta.Usuario.EmpresaId = empresa.Id;
+				novaConta.Usuario.EmpresaId = empresaId; //o ID e retornado na execucao do create.
 				await _usuarioServices.Create(novaConta.Usuario);
 
 				return Ok();

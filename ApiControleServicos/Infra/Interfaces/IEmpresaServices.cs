@@ -5,7 +5,7 @@ namespace ApiControleServicos.Infra
 {
     public interface IEmpresaServices
 	{
-		Task Create(CreateEmpresaModel empresa);
+		Task<int> Create(CreateEmpresaModel empresa);
 		Task<List<EmpresaModel>> GetAll();
 		Task<EmpresaDto> GetById(int id);
 		Task<EmpresaDto> GetByName(string name);

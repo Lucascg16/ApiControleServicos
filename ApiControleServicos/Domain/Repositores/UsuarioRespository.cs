@@ -28,8 +28,8 @@ namespace ApiControleServicos.Domain
 			var usuarioList = await _context.Usuario.Where(x => !x.Excluido && x.EmpresaId == empresaId)
 									.Skip((page - 1) * itensPerPage).Take(itensPerPage).ToListAsync();
 
-			if (!usuarioList.Any())
-				return Usuarios;
+			if (usuarioList.Count == 0)
+				return [];
 
 			foreach (var usuario in usuarioList) 
 			{
@@ -42,23 +42,23 @@ namespace ApiControleServicos.Domain
 		public async Task<UsuarioDto> GetByIdDto(int id)
 		{
 			var usuario = await _context.Usuario.Where(x => x.Id == id).FirstOrDefaultAsync();
-			return _mapper.Map<UsuarioDto>(usuario);// se nulo retorna um dto vazio
+			return _mapper.Map<UsuarioDto>(usuario) ?? new();
 		}
 
 		public async Task<UsuarioModel> GetById(int id)
 		{
-			return await _context.Usuario.FindAsync(id) ?? new UsuarioModel();
+			return await _context.Usuario.FindAsync(id) ?? new();
 		}
 
 		public async Task<UsuarioModel> GetByUserName(string userName)
 		{
-			return await _context.Usuario.Where(x => x.Email == userName).FirstOrDefaultAsync() ?? new UsuarioModel();
+			return await _context.Usuario.Where(x => x.Email == userName).FirstOrDefaultAsync() ?? new();
 		}
 
 		public async Task<UsuarioDto> GetByName(string name)
 		{
 			var usuario = await _context.Usuario.Where(x => x.Nome == name).FirstOrDefaultAsync();
-			return _mapper.Map<UsuarioDto>(usuario);
+			return _mapper.Map<UsuarioDto>(usuario) ?? new();
 		}
 
 		public void Update(UsuarioModel usuario)

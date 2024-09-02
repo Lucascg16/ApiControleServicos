@@ -58,7 +58,7 @@ namespace ApiControleServicos.Domain
 
 		public async Task<ServicoModel> GetById(int Id)
 		{
-			return await _context.Servicos.FindAsync(Id) ?? new ServicoModel();
+			return await _context.Servicos.FindAsync(Id) ?? new();
 		}
 
 		public void Update(ServicoModel servico)
