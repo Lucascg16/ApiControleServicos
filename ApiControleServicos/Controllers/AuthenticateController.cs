@@ -1,6 +1,7 @@
 ﻿using ApiControleServicos.Domain;
 using ApiControleServicos.Infra;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace ApiControleServicos.Controllers
 {
@@ -22,7 +23,7 @@ namespace ApiControleServicos.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Authentication(string email, string password)
+		public async Task<IActionResult> Authentication([EmailAddress]string email, string password)
 		{
 			try
 			{
