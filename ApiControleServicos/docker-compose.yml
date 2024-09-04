@@ -1,0 +1,20 @@
+services:
+  web-api:
+    image: ${DOCKER_REGISTRY-}web-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+     - "8000:80"       
+    depends_on:
+     - sqldata
+
+  sqldata:
+    image: mcr.microsoft.com/mssql/server:latest
+    environment:
+      - SA_PASSWORD=1q2w3e4r@#$
+      - ACCEPT_EULA=Y
+    volumes:
+      - c:\dados\mssql:/var/opt/mssql/data   
+    ports:
+      - "1450:1433"  

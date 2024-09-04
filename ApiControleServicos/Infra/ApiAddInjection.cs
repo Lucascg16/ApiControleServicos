@@ -25,5 +25,12 @@ namespace ApiControleServicos.Infra
 
             return services;
         }
+
+        public static void MigrationInicialization(this IApplicationBuilder app)
+        {
+			using var serviceScope = app.ApplicationServices.CreateScope();
+			var serviceDb = serviceScope.ServiceProvider.GetService<ApiDbContext>();
+			serviceDb.Database.Migrate();
+		}
     }
 }

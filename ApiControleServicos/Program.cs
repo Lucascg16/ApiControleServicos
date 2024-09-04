@@ -85,6 +85,8 @@ else
     app.UseExceptionHandler("/error");
 }
 
+ApiAddInjection.MigrationInicialization(app);
+
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
