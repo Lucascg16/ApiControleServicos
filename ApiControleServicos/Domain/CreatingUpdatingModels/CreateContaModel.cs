@@ -5,8 +5,8 @@ namespace ApiControleServicos.Domain
 	public class CreateContaModel
 	{
 		[Required]
-		public CreateEmpresaModel? Empresa { get; set; }
+		public CreateEmpresaModel Empresa { get; set; } = new();
 		[Required]
-		public CreateUsuarioModel? Usuario { get; set; }
+		public CreateUsuarioModel Usuario { get; set; } = new();
 	}
 }

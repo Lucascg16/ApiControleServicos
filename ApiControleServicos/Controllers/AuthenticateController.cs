@@ -1,4 +1,5 @@
 ﻿using ApiControleServicos.Domain;
+using ApiControleServicos.Domain.CreatingUpdatingModels;
 using ApiControleServicos.Infra;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
@@ -23,16 +24,16 @@ namespace ApiControleServicos.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Authentication([EmailAddress]string email, string password)
+		public async Task<IActionResult> Authentication([FromForm] LoginModel login)
 		{
 			try
 			{
-				var usuarioDataBase = await _usuarioServices.GetByUserName(email);
+				var usuarioDataBase = await _usuarioServices.GetByUserName(login.Email);
 
 				if (usuarioDataBase.Id == 0)
 					return Unauthorized("Email ou senha invalidos");
 
-				if (_criptoServices.Criptografa(password) != usuarioDataBase.Password)
+				if (_criptoServices.Criptografa(login.Password) != usuarioDataBase.Password)
 					return Unauthorized("Email ou senha invalidos");
 
 				var token = _tokenServices.GenerateToken(usuarioDataBase);
@@ -49,6 +50,12 @@ namespace ApiControleServicos.Controllers
 		{
 			try
 			{
+				var userverify = await _usuarioServices.GetByUserName(novaConta.Usuario.Email);
+				if (userverify.Id != 0)
+				{
+					return Unauthorized("O email digitado ja está cadastrado no sistema");
+				}
+
 				if (novaConta is null || novaConta.Empresa is null || novaConta.Usuario is null)
 					return BadRequest();
 
