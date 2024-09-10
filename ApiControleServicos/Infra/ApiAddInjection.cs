@@ -32,7 +32,7 @@ namespace ApiControleServicos.Infra
             {
 				using var serviceScope = app.ApplicationServices.CreateScope();
 				var serviceDb = serviceScope.ServiceProvider.GetService<ApiDbContext>();
-				serviceDb.Database.Migrate();
+				serviceDb?.Database.Migrate();
 			}
 			catch
             {
