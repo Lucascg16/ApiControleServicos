@@ -2,7 +2,6 @@
 using ApiControleServicos.Domain.CreatingUpdatingModels;
 using ApiControleServicos.Infra;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
 
 namespace ApiControleServicos.Controllers
 {
