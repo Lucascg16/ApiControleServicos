@@ -12,7 +12,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddInfra(builder.Configuration);
 
@@ -85,7 +84,7 @@ else
     app.UseExceptionHandler("/error");
 }
 
-ApiAddInjection.MigrationInicialization(app);
+ApiAddInjection.MigrationInicialization(app);//Inicializa as migrations automaticamente caso o banco esteja desatualizado.
 
 app.UseHttpsRedirection();
 
