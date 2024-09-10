@@ -59,7 +59,7 @@ namespace ApiControleServicos.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Create([FromForm] CreateServicoModel novoServico)
+		public async Task<IActionResult> Create([FromBody] CreateServicoModel novoServico)
 		{
 			try
 			{
@@ -73,7 +73,7 @@ namespace ApiControleServicos.Controllers
 		}
 
 		[HttpPatch]
-		public async Task<IActionResult> Update([FromForm] UpdateServicoModel servico)
+		public async Task<IActionResult> Update([FromBody] UpdateServicoModel servico)
 		{
 			try
 			{

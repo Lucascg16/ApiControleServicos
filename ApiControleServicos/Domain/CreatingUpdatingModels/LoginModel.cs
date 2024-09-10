@@ -1,13 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ApiControleServicos.Domain.CreatingUpdatingModels
+namespace ApiControleServicos.Domain
 {
     public record LoginModel
     {
         [Required]
         [EmailAddress]
-        public string Email { get; set; } = string.Empty;
+        public string? Email { get; set; }
         [Required]
-        public string Password { get; set; } = string.Empty;
+        public string? Password { get; set; }
     }
 }

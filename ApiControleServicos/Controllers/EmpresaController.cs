@@ -45,7 +45,7 @@ namespace ApiControleServicos.Controllers
 		}
 
 		[HttpPatch]
-		public async Task<IActionResult> Update([FromForm] UpdateEmpresaModel empresa)
+		public async Task<IActionResult> Update([FromBody] UpdateEmpresaModel empresa)
 		{
 			try
 			{

@@ -1,5 +1,4 @@
 ﻿using ApiControleServicos.Domain;
-using ApiControleServicos.Domain.CreatingUpdatingModels;
 using ApiControleServicos.Infra;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,7 +22,7 @@ namespace ApiControleServicos.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Authentication([FromForm] LoginModel login)
+		public async Task<IActionResult> Authentication([FromBody] LoginModel login)
 		{
 			try
 			{
@@ -45,7 +44,7 @@ namespace ApiControleServicos.Controllers
 		}
 
 		[HttpPost("create")]
-		public async Task<IActionResult> CreateAccount([FromForm] CreateContaModel novaConta)
+		public async Task<IActionResult> CreateAccount([FromBody] CreateContaModel novaConta)
 		{
 			try
 			{

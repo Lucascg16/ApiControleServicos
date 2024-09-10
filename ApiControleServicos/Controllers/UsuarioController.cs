@@ -48,7 +48,7 @@ namespace ApiControleServicos.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Create([FromForm] CreateUsuarioModel novoUsuario)
+		public async Task<IActionResult> Create([FromBody] CreateUsuarioModel novoUsuario)
 		{
 			try
 			{
@@ -62,7 +62,7 @@ namespace ApiControleServicos.Controllers
 		}
 
 		[HttpPatch]
-		public async Task<IActionResult> Update([FromForm] UpdateUsuarioModel usuario)
+		public async Task<IActionResult> Update([FromBody] UpdateUsuarioModel usuario)
 		{
 			try
 			{
