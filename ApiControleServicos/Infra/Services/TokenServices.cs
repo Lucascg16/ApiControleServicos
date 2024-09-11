@@ -20,8 +20,8 @@ namespace ApiControleServicos.Infra
 				audience: audience,
 				claims:
                 [
-                    new Claim("Id", usuario.Id.ToString()),
-					new Claim("Role", usuario.Role.ToString())
+                    new Claim("id", usuario.Id.ToString()),
+					new Claim("role", usuario.Role.ToString())
 				],
 				expires: DateTime.Now.AddHours(2),
 				signingCredentials: signingCredentials
