@@ -18,11 +18,11 @@ namespace ApiControleServicos.Infra
 			var tokenOptions = new JwtSecurityToken(
 				issuer: issuer,
 				audience: audience,
-				claims: new[]
-				{
-					new Claim("id", usuario.Id.ToString()),
-					new Claim("role", usuario.Role.ToString())
-				},
+				claims:
+                [
+                    new Claim("Id", usuario.Id.ToString()),
+					new Claim("Role", usuario.Role.ToString())
+				],
 				expires: DateTime.Now.AddHours(2),
 				signingCredentials: signingCredentials
 			);
