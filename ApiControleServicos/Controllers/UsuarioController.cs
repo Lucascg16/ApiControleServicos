@@ -53,7 +53,7 @@ namespace ApiControleServicos.Controllers
 		{
 			try
 			{
-				if(await _usuarioServices.GetByUserName(novoUsuario.Email) == null)
+				if(await _usuarioServices.GetByUserName(novoUsuario.Email) != null)
 					return Unauthorized("O Email digitado já existe na base de dados");
 
 				await _usuarioServices.Create(novoUsuario);
