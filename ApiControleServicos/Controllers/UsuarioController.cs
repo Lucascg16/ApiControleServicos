@@ -3,6 +3,7 @@ using ApiControleServicos.Infra;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using System.Net;
 
 namespace ApiControleServicos.Controllers
 {
@@ -52,6 +53,9 @@ namespace ApiControleServicos.Controllers
 		{
 			try
 			{
+				if(await _usuarioServices.GetByUserName(novoUsuario.Email) == null)
+					return Unauthorized("O Email digitado já existe na base de dados");
+
 				await _usuarioServices.Create(novoUsuario);
 				return Ok();
 			}
