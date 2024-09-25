@@ -49,7 +49,7 @@ namespace ApiControleServicos.Domain
 		public void Update(EmpresaModel empresa)
 		{
 			_context.Empresa.Update(empresa);
-			_context.SaveChangesAsync();
+			_context.SaveChanges();
 		}
 	}
 }

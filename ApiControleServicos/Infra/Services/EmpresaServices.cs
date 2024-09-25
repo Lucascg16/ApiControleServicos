@@ -47,7 +47,7 @@ namespace ApiControleServicos.Infra
 			if (empresa.Id == 0)
 				return;
 
-			empresa.UpdateEmpresa(empresaNova.Nome, empresaNova.Cnpj, empresaNova.Cpf);
+			empresa.UpdateEmpresa(empresaNova.Nome, empresaNova.Cnpj.Replace(".", "").Replace("-", "").Replace("/", ""), empresaNova.Cpf.Replace(".", "").Replace("-", ""));
 			_empresaRepository.Update(empresa);
 		}
 	}
