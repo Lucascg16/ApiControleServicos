@@ -80,22 +80,6 @@ namespace ApiControleServicos.Controllers
 			}
 		}
 
-		[HttpPatch("role")]
-		[Authorize(Roles = "Admin")]
-
-		public async Task<IActionResult> UpdateRole(int id, [Required] string role)
-		{
-			try
-			{
-				await _usuarioServices.UpdateRole(id, role);
-				return Ok();
-			}
-			catch
-			{
-				return BadRequest();
-			}
-		}
-
 		[HttpPatch("password")]
 		public async Task<IActionResult> UpdateSenha(int id, [Required] string senha)
 		{

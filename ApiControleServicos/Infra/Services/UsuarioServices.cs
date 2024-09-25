@@ -45,16 +45,9 @@ namespace ApiControleServicos.Infra
 		{
 			var usuario = await _usuarioRepository.GetById(usuarioNovo.Id);
 			usuario.UpdateUsuario(usuarioNovo.Nome, usuarioNovo.Email);
+            usuario.UpdateRole(usuarioNovo.Role);
 
-			_usuarioRepository.Update(usuario);
-		}
-
-		public async Task UpdateRole(int id, string role)
-		{
-			var usuario = await _usuarioRepository.GetById(id);
-			usuario.UpdateRole(role);
-
-			_usuarioRepository.Update(usuario);
+            _usuarioRepository.Update(usuario);
 		}
 
 		public async Task UpdateSenha(int id, string senha)

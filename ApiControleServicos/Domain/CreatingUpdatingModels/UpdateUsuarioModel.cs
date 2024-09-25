@@ -12,6 +12,8 @@ namespace ApiControleServicos.Domain
 		[EmailAddress]
 		public string Email { get; set; } = string.Empty;
 		[Required]
+		public string Role { get; set; } = "none";
+		[Required]
 		public int EmpresaId { get; set; }
 	}
 }
