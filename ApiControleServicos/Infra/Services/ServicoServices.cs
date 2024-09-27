@@ -13,7 +13,7 @@ namespace ApiControleServicos.Infra
 
 		public async Task Create(CreateServicoModel novoServico)
 		{
-			ServicoModel servico = new(novoServico.Nome, novoServico.Description, novoServico.Custos, novoServico.OrcamentoInicial,
+			ServicoModel servico = new(novoServico.Nome, novoServico.Descricao, novoServico.Custos, novoServico.OrcamentoInicial,
 									novoServico.UsuarioId, novoServico.EmpresaId);
 			await _repository.Create(servico);
 		}
