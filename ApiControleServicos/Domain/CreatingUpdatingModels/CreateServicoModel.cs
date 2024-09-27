@@ -6,7 +6,7 @@ namespace ApiControleServicos.Domain
 	{
 		[Required]
 		public string Nome { get; set; } = string.Empty;
-		public string Description { get; set; } = string.Empty;
+		public string Descricao { get; set; } = string.Empty;
 		[Required]
 		public double Custos { get; set; }
 		[Required]
