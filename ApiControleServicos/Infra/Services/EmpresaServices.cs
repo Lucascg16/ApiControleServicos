@@ -17,10 +17,10 @@ namespace ApiControleServicos.Infra
 			string normalizedCNPJ = "", normalizedCPF = "";
 
 			if (novaEmpresa.Cnpj is not null)
-				normalizedCNPJ = novaEmpresa.Cnpj.Replace(".", "").Replace("-", "").Replace("/","");
+				normalizedCNPJ = NormalizeCnpj(novaEmpresa.Cnpj);
 
 			if (novaEmpresa.Cpf is not null)
-				normalizedCPF = novaEmpresa.Cpf.Replace(".", "").Replace("-", "");
+				normalizedCPF = NormalizeCpf(novaEmpresa.Cpf);
 
 			EmpresaModel empresa = new(novaEmpresa.Nome, normalizedCNPJ, normalizedCPF);
 			return await _empresaRepository.Create(empresa);
@@ -47,8 +47,21 @@ namespace ApiControleServicos.Infra
 			if (empresa.Id == 0)
 				return;
 
-			empresa.UpdateEmpresa(empresaNova.Nome, empresaNova.Cnpj.Replace(".", "").Replace("-", "").Replace("/", ""), empresaNova.Cpf.Replace(".", "").Replace("-", ""));
+			empresa.UpdateEmpresa(empresaNova.Nome, NormalizeCnpj(empresaNova.Cnpj), NormalizeCpf(empresaNova.Cpf));
 			_empresaRepository.Update(empresa);
 		}
+
+		public string? NormalizeCnpj(string cnpj)
+		{
+			if (!string.IsNullOrWhiteSpace(cnpj))
+				return cnpj.Replace(".", "").Replace("-", "").Replace("/", "");
+			return null;
+        }
+		public string? NormalizeCpf(string cpf)
+		{
+			if (!string.IsNullOrWhiteSpace(cpf))
+				return cpf.Replace(".", "").Replace("-", "");
+			return null;
+        }
 	}
 }
