@@ -6,7 +6,7 @@ namespace ApiControleServicos.Domain
 	{
 		Task Create(ServicoModel servico);
 		Task<List<ServicoDto>> GetAllOpen(int emrpesaId, int page, int itensPerPage);
-		Task<List<ServicoDto>> GetAll(int emrpesaId, int page, int itensPerPage);
+		Task<List<ServicoDto>> GetAllClosed(int emrpesaId, int page, int itensPerPage);
 		Task<ServicoDto> GetByIdDto(int Id);
 		Task<ServicoModel> GetById(int id);
 		void Update(ServicoModel servico);

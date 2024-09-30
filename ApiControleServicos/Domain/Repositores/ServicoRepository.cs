@@ -36,9 +36,9 @@ namespace ApiControleServicos.Domain
 			return dtoList;
 		}
 		
-		public async Task<List<ServicoDto>> GetAll(int emrpesaId, int page, int itensPerPage)
+		public async Task<List<ServicoDto>> GetAllClosed(int emrpesaId, int page, int itensPerPage)
 		{
-			var servicoList = await _context.Servicos.Where(x => x.EmpresaId == emrpesaId)
+			var servicoList = await _context.Servicos.Where(x => (x.Excluido || x.DataFinalizado != null) && x.EmpresaId == emrpesaId)
 									.Skip((page - 1) * itensPerPage).Take(itensPerPage).ToListAsync();
 
 			List<ServicoDto> dtoList = [];

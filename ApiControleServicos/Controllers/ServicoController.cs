@@ -30,12 +30,12 @@ namespace ApiControleServicos.Controllers
 			}
 		}
 
-		[HttpGet("all")]
-		public async Task<IActionResult> GetAll([Required]int empresaId, int page = 1, int itensPerPage = 10)
+		[HttpGet("close")]
+		public async Task<IActionResult> GetAllClosed([Required]int empresaId, int page = 1, int itensPerPage = 10)
 		{
 			try
 			{
-				var servicoList = await _services.GetAll(empresaId, page, itensPerPage);
+				var servicoList = await _services.GetAllClosed(empresaId, page, itensPerPage);
 				return Ok(servicoList);
 			}
 			catch
