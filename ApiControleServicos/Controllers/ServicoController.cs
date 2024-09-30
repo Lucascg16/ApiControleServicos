@@ -100,7 +100,7 @@ namespace ApiControleServicos.Controllers
 			}
 		}
 
-		[HttpDelete]
+		[HttpPatch("delete")]
 		public async Task<IActionResult> CancelarServico([Required]int servicoId)
 		{
 			try
