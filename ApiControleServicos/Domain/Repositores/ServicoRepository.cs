@@ -22,9 +22,17 @@ namespace ApiControleServicos.Domain
 			await _context.SaveChangesAsync();
 		}
 
-		public async Task<List<ServicoDto>> GetAllOpen(int emrpesaId, int page, int itensPerPage)
+		public async Task<int> GetTotalNumber(int empresaId, bool close)
 		{
-			var servicoList = await _context.Servicos.Where(x => x.DataFinalizado == null && !x.Excluido && x.EmpresaId == emrpesaId)
+			if (close)
+				return await _context.Servicos.Where(x => (x.Excluido || x.DataFinalizado != null) && x.EmpresaId == empresaId).CountAsync();
+			
+            return await _context.Servicos.Where(x => x.DataFinalizado == null && !x.Excluido && x.EmpresaId == empresaId).CountAsync();
+        }
+
+        public async Task<List<ServicoDto>> GetAllOpen(int empresaId, int page, int itensPerPage)
+		{
+			var servicoList = await _context.Servicos.Where(x => x.DataFinalizado == null && !x.Excluido && x.EmpresaId == empresaId)
 									.Skip((page - 1) * itensPerPage).Take(itensPerPage).ToListAsync();
 
 			List<ServicoDto> dtoList = [];
@@ -36,9 +44,9 @@ namespace ApiControleServicos.Domain
 			return dtoList;
 		}
 		
-		public async Task<List<ServicoDto>> GetAllClosed(int emrpesaId, int page, int itensPerPage)
+		public async Task<List<ServicoDto>> GetAllClosed(int empresaId, int page, int itensPerPage)
 		{
-			var servicoList = await _context.Servicos.Where(x => (x.Excluido || x.DataFinalizado != null) && x.EmpresaId == emrpesaId)
+			var servicoList = await _context.Servicos.Where(x => (x.Excluido || x.DataFinalizado != null) && x.EmpresaId == empresaId)
 									.Skip((page - 1) * itensPerPage).Take(itensPerPage).ToListAsync();
 
 			List<ServicoDto> dtoList = [];

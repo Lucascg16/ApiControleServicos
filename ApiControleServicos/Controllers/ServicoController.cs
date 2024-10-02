@@ -30,6 +30,19 @@ namespace ApiControleServicos.Controllers
 			}
 		}
 
+		[HttpGet("total")]
+		public async Task<IActionResult> GetTotalItems(int empresaId, bool close)
+		{
+			try
+			{
+				return Ok(await _services.GetAllNumber(empresaId, close));
+			}
+			catch
+			{
+				return BadRequest();
+			}
+		}
+
 		[HttpGet("close")]
 		public async Task<IActionResult> GetAllClosed([Required]int empresaId, int page = 1, int itensPerPage = 10)
 		{

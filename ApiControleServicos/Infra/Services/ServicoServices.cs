@@ -18,6 +18,11 @@ namespace ApiControleServicos.Infra
 			await _repository.Create(servico);
 		}
 
+		public async Task<int> GetAllNumber(int empresaId, bool close)
+		{
+			return await _repository.GetTotalNumber(empresaId, close);
+		}
+
 		public Task<List<ServicoDto>> GetAllClosed(int emrpesaId, int page, int itensPerPage)
 		{
 			return _repository.GetAllClosed(emrpesaId, page, itensPerPage);
