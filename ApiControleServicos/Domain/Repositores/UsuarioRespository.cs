@@ -22,6 +22,11 @@ namespace ApiControleServicos.Domain
 			await _context.SaveChangesAsync();
 		}
 
+		public async Task<int> GetAllNumber(int empresaId)
+		{
+			return await _context.Usuario.Where(x => x.EmpresaId == empresaId).CountAsync();
+		}
+
 		public async Task<List<UsuarioDto>> GetAll(int empresaId, int page, int itensPerPage)
 		{
 			List<UsuarioDto> Usuarios = [];

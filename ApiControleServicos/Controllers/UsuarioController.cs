@@ -33,6 +33,19 @@ namespace ApiControleServicos.Controllers
 			}
 		}
 
+		[HttpGet("total")]
+		public async Task<IActionResult> GetAllNumber(int empresaId)
+		{
+			try
+			{
+				return Ok(await _usuarioServices.GetAllNumber(empresaId));
+			}
+			catch 
+			{
+				return BadRequest();
+			}
+		}
+
 		[HttpGet("All")]
 		[Authorize(Roles = "Admin")]
 		public async Task<IActionResult> GetAll([Required]int empresaId, int page = 1, int itensPerPage = 10)

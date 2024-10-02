@@ -21,6 +21,11 @@ namespace ApiControleServicos.Infra
 			await _usuarioRepository.Create(usuario);
 		}
 
+		public async Task<int> GetAllNumber(int empresaId)
+		{
+			return await _usuarioRepository.GetAllNumber(empresaId);
+		}
+
 		public Task<List<UsuarioDto>> GetAll(int empresaId ,int page, int itensPerPage)
 		{
 			return _usuarioRepository.GetAll(empresaId ,page, itensPerPage);
