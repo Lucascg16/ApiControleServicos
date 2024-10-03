@@ -33,7 +33,7 @@ namespace ApiControleServicos.Domain
         public async Task<List<ServicoDto>> GetAllOpen(int empresaId, int page, int itensPerPage)
 		{
 			var servicoList = await _context.Servicos.Where(x => x.DataFinalizado == null && !x.Excluido && x.EmpresaId == empresaId)
-									.Skip((page - 1) * itensPerPage).Take(itensPerPage).ToListAsync();
+									.Skip((page - 1) * itensPerPage).Take(itensPerPage).OrderByDescending(x => x.DataCriacao).ToListAsync();
 
 			List<ServicoDto> dtoList = [];
 			foreach (var servico in servicoList) 
@@ -47,7 +47,7 @@ namespace ApiControleServicos.Domain
 		public async Task<List<ServicoDto>> GetAllClosed(int empresaId, int page, int itensPerPage)
 		{
 			var servicoList = await _context.Servicos.Where(x => (x.Excluido || x.DataFinalizado != null) && x.EmpresaId == empresaId)
-									.Skip((page - 1) * itensPerPage).Take(itensPerPage).ToListAsync();
+									.Skip((page - 1) * itensPerPage).Take(itensPerPage).OrderByDescending(x => x.DataFinalizado).ToListAsync();
 
 			List<ServicoDto> dtoList = [];
             foreach (var servico in servicoList)
