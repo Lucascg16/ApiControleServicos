@@ -3,6 +3,7 @@
 	public record ServicoDto
 	{
 		public int Id { get; set; }
+		public int EmpresaId { get; set; }
 		public string? Nome { get; set; }
 		public string? Descricao { get; set; }
 		public double? Custos { get; set; }
