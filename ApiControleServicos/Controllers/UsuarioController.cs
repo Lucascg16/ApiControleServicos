@@ -19,7 +19,7 @@ namespace ApiControleServicos.Controllers
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> GetById(int id) 
+		public async Task<IActionResult> GetById(Guid id) 
 		{
 			try
 			{

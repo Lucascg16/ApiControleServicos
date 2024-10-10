@@ -50,7 +50,7 @@ namespace ApiControleServicos.Domain
 			return _mapper.Map<UsuarioDto>(usuario) ?? new();
 		}
 
-		public async Task<UsuarioModel> GetById(int id)
+		public async Task<UsuarioModel> GetById(Guid id)
 		{
 			return await _context.Usuario.FindAsync(id) ?? new();
 		}

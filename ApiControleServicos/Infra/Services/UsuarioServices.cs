@@ -26,12 +26,12 @@ namespace ApiControleServicos.Infra
 			return await _usuarioRepository.GetAllNumber(empresaId);
 		}
 
-		public Task<List<UsuarioDto>> GetAll(int empresaId ,int page, int itensPerPage)
+		public Task<List<UsuarioDto>> GetAll(int empresaId, int page, int itensPerPage)
 		{
-			return _usuarioRepository.GetAll(empresaId ,page, itensPerPage);
+			return _usuarioRepository.GetAll(empresaId, page, itensPerPage);
 		}
 
-		public Task<UsuarioDto> GetById(int id)
+		public Task<UsuarioDto> GetById(Guid id)
 		{
 			return _usuarioRepository.GetByIdDto(id);
 		}
