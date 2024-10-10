@@ -13,7 +13,7 @@ namespace ApiControleServicos.Infra
 		Task<int> GetAllNumber(int empresaId);
         Task<List<UsuarioDto>> GetAll(int empresaId, int page, int itensPerPage);
 		Task Update(UpdateUsuarioModel usuario);
-		Task UpdateSenha(int id, string senha);
+		Task UpdateSenha(int id, string senha, string novaSenha);
 		Task Delete(int id);
     }
 }

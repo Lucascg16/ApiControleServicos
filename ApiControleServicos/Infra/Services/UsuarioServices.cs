@@ -59,10 +59,17 @@ namespace ApiControleServicos.Infra
             _usuarioRepository.Update(usuario);
 		}
 
-		public async Task UpdateSenha(int id, string senha)
+		public async Task UpdateSenha(int id, string senha, string novaSenha)
 		{
 			var usuario = await _usuarioRepository.GetById(id);
-			usuario.UpdateSenha(_criptoServices.Criptografa(senha));
+
+			if (usuario.Password != _criptoServices.Criptografa(senha))
+			{
+				Exception ex = new("A senha digitada não confere com a senha atual");
+				throw ex;
+            }
+
+			usuario.UpdateSenha(_criptoServices.Criptografa(novaSenha));
 
 			_usuarioRepository.Update(usuario);
 		}

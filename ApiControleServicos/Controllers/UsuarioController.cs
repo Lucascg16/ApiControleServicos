@@ -121,12 +121,16 @@ namespace ApiControleServicos.Controllers
 		}
 
 		[HttpPatch("password")]
-		public async Task<IActionResult> UpdateSenha(int id, [Required] string senha)
+		public async Task<IActionResult> UpdateSenha(int id, string senha, string novaSenha)
 		{
 			try
 			{
-				await _usuarioServices.UpdateSenha(id, senha);
+				await _usuarioServices.UpdateSenha(id, senha, novaSenha);
 				return Ok();
+			}
+			catch(Exception ex)
+			{
+				return BadRequest(ex.Message);
 			}
 			catch
 			{
