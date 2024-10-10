@@ -62,5 +62,13 @@ namespace ApiControleServicos.Infra
 
 			_usuarioRepository.Update(usuario);
 		}
+
+		public async Task Delete(int id)
+		{
+			var usuario = await _usuarioRepository.GetById(id);
+			usuario.Delete();//delete logico
+
+			_usuarioRepository.Update(usuario);//não apaga somente atualiza a flag
+		}
 	}
 }

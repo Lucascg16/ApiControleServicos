@@ -3,7 +3,6 @@ using ApiControleServicos.Infra;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
-using System.Net;
 
 namespace ApiControleServicos.Controllers
 {
@@ -85,6 +84,20 @@ namespace ApiControleServicos.Controllers
 			try
 			{
 				await _usuarioServices.Update(usuario);
+				return Ok();
+			}
+			catch
+			{
+				return BadRequest();
+			}
+		}
+
+		[HttpDelete]
+		public async Task<IActionResult> Delete(int id)
+		{
+			try
+			{
+				await _usuarioServices.Delete(id);
 				return Ok();
 			}
 			catch
