@@ -19,7 +19,21 @@ namespace ApiControleServicos.Controllers
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> GetById(Guid id) 
+		public async Task<IActionResult> GetById(int id) 
+		{
+			try
+			{
+				var usuario = await _usuarioServices.GetById(id);
+				return Ok(usuario);
+			}
+			catch
+			{
+				return BadRequest();
+			}
+		}
+
+		[HttpGet("vId")]
+		public async Task<IActionResult> GetByVId(Guid id)
 		{
 			try
 			{

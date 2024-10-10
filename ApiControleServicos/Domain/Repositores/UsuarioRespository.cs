@@ -44,21 +44,21 @@ namespace ApiControleServicos.Domain
 			return Usuarios;
 		}
 
-		public async Task<UsuarioDto> GetByIdDto(Guid id)
+		public async Task<UsuarioDto> GetByIdDto(int id)
 		{
-			var usuario = await _context.Usuario.Where(x => x.VId == id).FirstOrDefaultAsync();
+			var usuario = await _context.Usuario.Where(x => x.Id == id).FirstOrDefaultAsync();
 			return _mapper.Map<UsuarioDto>(usuario) ?? new();
 		}
+        public async Task<UsuarioDto> GetByIdDto(Guid id)
+        {
+            var usuario = await _context.Usuario.Where(x => x.VId == id).FirstOrDefaultAsync();
+            return _mapper.Map<UsuarioDto>(usuario) ?? new();
+        }
 
-		public async Task<UsuarioModel> GetById(Guid id)
-		{
-			return await _context.Usuario.FindAsync(id) ?? new();
-		}
         public async Task<UsuarioModel> GetById(int id)
         {
             return await _context.Usuario.FindAsync(id) ?? new();
         }
-
 
         public async Task<UsuarioModel> GetByUserName(string userName)
 		{

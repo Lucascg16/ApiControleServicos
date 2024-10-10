@@ -31,12 +31,16 @@ namespace ApiControleServicos.Infra
 			return _usuarioRepository.GetAll(empresaId, page, itensPerPage);
 		}
 
-		public Task<UsuarioDto> GetById(Guid id)
+		public Task<UsuarioDto> GetById(int id)
 		{
 			return _usuarioRepository.GetByIdDto(id);
 		}
+        public Task<UsuarioDto> GetById(Guid id)
+        {
+            return _usuarioRepository.GetByIdDto(id);
+        }
 
-		public Task<UsuarioDto> GetByName(string name)
+        public Task<UsuarioDto> GetByName(string name)
 		{
 			return _usuarioRepository.GetByName(name);
 		}

@@ -5,8 +5,8 @@ namespace ApiControleServicos.Domain
 	public interface IUsuarioRepository
 	{
 		Task Create(UsuarioModel usuario);
+		Task<UsuarioDto> GetByIdDto(int id);
 		Task<UsuarioDto> GetByIdDto(Guid id);
-		Task<UsuarioModel> GetById(Guid id);
         Task<UsuarioModel> GetById(int id);
         Task<UsuarioModel> GetByUserName(string userName);
 		Task<UsuarioDto> GetByName(string name);
