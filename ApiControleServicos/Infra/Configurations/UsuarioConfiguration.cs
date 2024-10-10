@@ -42,6 +42,12 @@ namespace ApiControleServicos.Infra.Configurations
                 .IsRequired()
                 .OnDelete(DeleteBehavior.NoAction);
 
+            builder.Property(x => x.VId)
+                .IsRequired()
+                .HasColumnName("VisualId")
+                .HasColumnType("nvarchar(max)")
+                .ValueGeneratedNever();
+
             builder.Property(x => x.Excluido)
                 .HasColumnName("Excluido")
                 .HasDefaultValue(false)
