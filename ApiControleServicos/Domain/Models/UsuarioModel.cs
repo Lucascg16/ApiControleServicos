@@ -19,7 +19,7 @@
             VId = Guid.Empty;
         }
 
-        public UsuarioModel(string nome, string email, string passWord, string role, int empresaId, Guid? vId)
+        public UsuarioModel(string nome, string email, string passWord, string role, int empresaId, Guid? vId, bool dono)
         {
             Nome = nome;
             Email = email;
@@ -27,6 +27,7 @@
             Role = role;
             EmpresaId = empresaId;
             VId = vId;
+            Dono = dono;
         }
 
         public void UpdateUsuario(string nome, string email)

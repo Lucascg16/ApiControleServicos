@@ -17,7 +17,7 @@ namespace ApiControleServicos.Infra
 		public async Task Create(CreateUsuarioModel novoUsuario)
 		{
 			UsuarioModel usuario = new(novoUsuario.Nome, novoUsuario.Email, _criptoServices.Criptografa(novoUsuario.Password),
-									novoUsuario.Role, novoUsuario.EmpresaId, Guid.NewGuid());
+									novoUsuario.Role, novoUsuario.EmpresaId, Guid.NewGuid(), novoUsuario.Dono);
 			await _usuarioRepository.Create(usuario);
 		}
 

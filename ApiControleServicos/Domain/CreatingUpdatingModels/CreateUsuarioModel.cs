@@ -16,5 +16,7 @@ namespace ApiControleServicos.Domain
 		public string Role { get; set; } = "none";
 		[DefaultValue(0)]
 		public int EmpresaId { get; set; }
+		[DefaultValue(false)]
+		public bool Dono { get; set; }
 	}
 }
