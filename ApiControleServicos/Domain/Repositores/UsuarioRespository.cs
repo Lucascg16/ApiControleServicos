@@ -44,6 +44,11 @@ namespace ApiControleServicos.Domain
 			return Usuarios;
 		}
 
+		public async Task<List<UsuarioModel>> GetAll(int empresaId)
+		{
+			return await _context.Usuario.Where(x => x.EmpresaId == empresaId).ToListAsync();
+		}
+
 		public async Task<UsuarioDto> GetByIdDto(int id)
 		{
 			var usuario = await _context.Usuario.Where(x => x.Id == id).FirstOrDefaultAsync();
@@ -74,6 +79,12 @@ namespace ApiControleServicos.Domain
 		public void Update(UsuarioModel usuario)
 		{
 			_context.Usuario.Update(usuario);
+			_context.SaveChanges();
+		}
+
+		public void UpdateRange(List<UsuarioModel> usuarios)
+		{
+			_context.Usuario.UpdateRange(usuarios);
 			_context.SaveChanges();
 		}
 	}

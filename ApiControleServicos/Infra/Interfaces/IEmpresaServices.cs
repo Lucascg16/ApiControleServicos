@@ -10,5 +10,6 @@ namespace ApiControleServicos.Infra
 		Task<EmpresaDto> GetById(int id);
 		Task<EmpresaDto> GetByName(string name);
 		Task Update(UpdateEmpresaModel empresa);
-	}
+		Task DesableAll(int id);
+    }
 }

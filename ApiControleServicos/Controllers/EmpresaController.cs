@@ -57,5 +57,19 @@ namespace ApiControleServicos.Controllers
 				return BadRequest();
 			}
 		}
+
+		[HttpDelete]
+		public async Task<IActionResult> DesableAll(int id)
+		{
+			try
+			{
+				await _empresaServices.DesableAll(id);
+				return Ok();
+			}
+			catch
+			{
+				return BadRequest();
+			}
+		}
 	}
 }

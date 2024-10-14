@@ -6,13 +6,15 @@ namespace ApiControleServicos.Infra
     public class EmpresaServices : IEmpresaServices
 	{
 		private readonly IEmpresaRepository _empresaRepository;
+		private readonly IUsuarioRepository _usuarioRepository;
 
-		public EmpresaServices(IEmpresaRepository empresaRepository)
-		{
-			_empresaRepository = empresaRepository;
-		}
+        public EmpresaServices(IEmpresaRepository empresaRepository, IUsuarioRepository usuarioRepository)
+        {
+            _empresaRepository = empresaRepository;
+            _usuarioRepository = usuarioRepository;
+        }
 
-		public async Task<int> Create(CreateEmpresaModel novaEmpresa)
+        public async Task<int> Create(CreateEmpresaModel novaEmpresa)
 		{
 			EmpresaModel empresa = new(novaEmpresa.Nome, Ultilitarios.NormalizeCnpj(novaEmpresa.Cnpj), Ultilitarios.NormalizeCpf(novaEmpresa.Cpf));
 			return await _empresaRepository.Create(empresa);
@@ -44,6 +46,19 @@ namespace ApiControleServicos.Infra
             _empresaRepository.Update(empresa);
 		}
 
+		public async Task DesableAll(int id)
+		{
+			var empresa = await _empresaRepository.GetById(id);
+			var usuarios = await _usuarioRepository.GetAll(id);
 
+			foreach(var usuario in usuarios)
+			{
+				usuario.Delete();
+			}
+            empresa.Delete();
+
+            _usuarioRepository.UpdateRange(usuarios);			
+			_empresaRepository.Update(empresa);
+		}
 	}
 }
