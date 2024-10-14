@@ -8,5 +8,6 @@
 		public string? Email { get; set; }
 		public string Role { get; set; } = "none";
 		public int EmpresaId { get; set; }
+		public bool Dono {  get; set; }
 	}
 }
