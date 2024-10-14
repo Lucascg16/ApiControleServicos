@@ -48,6 +48,12 @@ namespace ApiControleServicos.Infra.Configurations
                 .HasColumnType("nvarchar(max)")
                 .ValueGeneratedNever();
 
+            builder.Property(x => x.Dono)
+                .IsRequired()
+                .HasDefaultValue(false)
+                .HasColumnName("Dono")
+                .HasColumnType("bit");
+
             builder.Property(x => x.Excluido)
                 .HasColumnName("Excluido")
                 .HasDefaultValue(false)
@@ -63,7 +69,6 @@ namespace ApiControleServicos.Infra.Configurations
                 .HasColumnName("DataDeCriacao")
                 .HasColumnType("dateTime")
                 .IsRequired();
-
         }
     }
 }

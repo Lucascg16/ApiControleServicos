@@ -8,6 +8,7 @@
         public string Role { get; set; } = "none";
         public int EmpresaId { get; set; }
         public Guid? VId { get; set; } //VId = visual id, pode ser visto na url.
+        public bool Dono {  get; set; } = false;
 
         public UsuarioModel()
         {
