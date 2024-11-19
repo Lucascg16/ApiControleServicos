@@ -12,7 +12,7 @@ namespace ApiControleServicos.Controllers
 		private readonly IUsuarioServices _usuarioServices;
 		private readonly IEmpresaServices _empresaServices;
 		private readonly ICriptoServices _criptoServices;
-		public AuthenticateController(ITokenServices tokenServices, IUsuarioServices services, 
+		public AuthenticateController(ITokenServices tokenServices, IUsuarioServices services,
 			IEmpresaServices empresa, ICriptoServices criptoServices)
 		{
 			_tokenServices = tokenServices;
@@ -37,7 +37,25 @@ namespace ApiControleServicos.Controllers
 				var token = _tokenServices.GenerateToken(usuarioDataBase);
 				return Ok(token);
 			}
-			catch(Exception ex)
+			catch (Exception ex)
+			{
+				return BadRequest(ex.Message);
+			}
+		}
+
+		[HttpPost("GeneratePassToken")]
+		public async Task<IActionResult> GeneratePasswordToken(string email)
+		{
+			try
+			{
+				var userDataBase = await _usuarioServices.GetByUserName(email);
+				if(userDataBase.Id == 0){
+					return Unauthorized("Email digitado não existe na base de dados");
+				}
+			
+				return Ok(_tokenServices.GenerateToken(userDataBase, 3));
+			}
+			catch (Exception ex)
 			{
 				return BadRequest(ex.Message);
 			}

@@ -8,7 +8,7 @@ namespace ApiControleServicos.Infra
 {
 	public class TokenServices : ITokenServices
 	{
-		public string GenerateToken(UsuarioModel usuario) 
+		public string GenerateToken(UsuarioModel usuario, int expires = 2) 
 		{
 			var key = Encoding.ASCII.GetBytes(Settings.Secret);
 			var signingCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);
@@ -23,7 +23,7 @@ namespace ApiControleServicos.Infra
                     new Claim("id", usuario.Id.ToString()),
 					new Claim("role", usuario.Role.ToString())
 				],
-				expires: DateTime.Now.AddHours(2),
+				expires: DateTime.Now.AddHours(expires),
 				signingCredentials: signingCredentials
 			);
 

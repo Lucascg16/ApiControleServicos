@@ -4,6 +4,6 @@ namespace ApiControleServicos.Infra
 {
 	public interface ITokenServices
 	{
-		string GenerateToken(UsuarioModel usuario);
+		string GenerateToken(UsuarioModel usuario, int expires = 2);
 	}
 }
