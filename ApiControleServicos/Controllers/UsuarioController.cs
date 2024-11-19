@@ -132,10 +132,6 @@ namespace ApiControleServicos.Controllers
 			{
 				return BadRequest(ex.Message);
 			}
-			catch
-			{
-				return BadRequest();
-			}
 		}
 	}
 }
