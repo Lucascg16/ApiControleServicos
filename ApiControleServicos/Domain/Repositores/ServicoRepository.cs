@@ -22,41 +22,53 @@ namespace ApiControleServicos.Domain
 			await _context.SaveChangesAsync();
 		}
 
-		public async Task<int> GetTotalNumber(int empresaId, bool close)
+		public async Task<int> GetTotalNumber(int empresaId, string flag)
 		{
-			if (close)
-				return await _context.Servicos.Where(x => (x.Excluido || x.DataFinalizado != null) && x.EmpresaId == empresaId).CountAsync();
-			
-            return await _context.Servicos.Where(x => x.DataFinalizado == null && !x.Excluido && x.EmpresaId == empresaId).CountAsync();
-        }
+			switch (flag)
+			{
+				case "Ativo":
+					return await _context.Servicos.Where(x => x.DataFinalizado == null && !x.Excluido && x.EmpresaId == empresaId).CountAsync();
+				case "Cancelado":
+					return await _context.Servicos.Where(x => x.DataFinalizado == null && x.Excluido && x.EmpresaId == empresaId).CountAsync();
+				case "Finalizado":
+					return await _context.Servicos.Where(x => x.DataFinalizado != null && !x.Excluido && x.EmpresaId == empresaId).CountAsync();
+				default:
+					return 0;
+			}
+		}
 
-        public async Task<List<ServicoDto>> GetAllOpen(int empresaId, int page, int itensPerPage)
+		public async Task<List<ServicoDto>> GetAll(int empresaId, int page, int itensPerPage, string flag)
 		{
-			var servicoList = await _context.Servicos.Where(x => x.DataFinalizado == null && !x.Excluido && x.EmpresaId == empresaId)
-									.Skip((page - 1) * itensPerPage).Take(itensPerPage).OrderByDescending(x => x.DataCriacao).ToListAsync();
+			List<ServicoModel> servicoList;
+			switch (flag)
+			{
+				case "Ativo":
+					servicoList = await _context.Servicos.Where(x => x.DataFinalizado == null && !x.Excluido && x.EmpresaId == empresaId)
+											.Skip((page - 1) * itensPerPage).Take(itensPerPage).OrderByDescending(x => x.DataCriacao).ToListAsync();
+					break;
+				case "Cancelado":
+					servicoList = await _context.Servicos.Where(x => x.DataFinalizado == null && x.Excluido && x.EmpresaId == empresaId)
+											.Skip((page - 1) * itensPerPage).Take(itensPerPage).OrderByDescending(x => x.DataCriacao).ToListAsync();
+					break;
+
+				case "Finalizado":
+					servicoList = await _context.Servicos.Where(x => x.DataFinalizado != null && !x.Excluido && x.EmpresaId == empresaId)
+											.Skip((page - 1) * itensPerPage).Take(itensPerPage).OrderByDescending(x => x.DataCriacao).ToListAsync();
+					break;
+
+				default:
+					servicoList = [];
+					break;
+			}
 
 			List<ServicoDto> dtoList = [];
-			foreach (var servico in servicoList) 
+			foreach (var servico in servicoList)
 			{
 				dtoList.Add(_mapper.Map<ServicoDto>(servico));
 			}
 
 			return dtoList;
 		}
-		
-		public async Task<List<ServicoDto>> GetAllClosed(int empresaId, int page, int itensPerPage)
-		{
-			var servicoList = await _context.Servicos.Where(x => (x.Excluido || x.DataFinalizado != null) && x.EmpresaId == empresaId)
-									.Skip((page - 1) * itensPerPage).Take(itensPerPage).OrderByDescending(x => x.DataFinalizado).ToListAsync();
-
-			List<ServicoDto> dtoList = [];
-            foreach (var servico in servicoList)
-            {
-				dtoList.Add(_mapper.Map<ServicoDto>(servico));
-            }
-
-			return dtoList;
-        }
 
 		public async Task<ServicoDto> GetByIdDto(int Id)
 		{

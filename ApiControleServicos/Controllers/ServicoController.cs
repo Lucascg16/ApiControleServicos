@@ -31,11 +31,11 @@ namespace ApiControleServicos.Controllers
 		}
 
 		[HttpGet("total")]
-		public async Task<IActionResult> GetTotalItems(int empresaId, bool close)
+		public async Task<IActionResult> GetTotalItems(int empresaId, string flag)
 		{
 			try
 			{
-				return Ok(await _services.GetAllNumber(empresaId, close));
+				return Ok(await _services.GetAllNumber(empresaId, flag));
 			}
 			catch
 			{
@@ -43,26 +43,12 @@ namespace ApiControleServicos.Controllers
 			}
 		}
 
-		[HttpGet("close")]
-		public async Task<IActionResult> GetAllClosed([Required]int empresaId, int page = 1, int itensPerPage = 10)
+		[HttpGet("all")]
+		public async Task<IActionResult> GetAll([Required]int empresaId, string flag = "Ativo", int page = 1, int itensPerPage = 10)
 		{
 			try
 			{
-				var servicoList = await _services.GetAllClosed(empresaId, page, itensPerPage);
-				return Ok(servicoList);
-			}
-			catch
-			{
-				return BadRequest();
-			}
-		}
-
-		[HttpGet("open")]
-		public async Task<IActionResult> GetAllOpen([Required]int empresaId, int page = 1, int itensPerPage = 10)
-		{
-			try
-			{
-				var servicoList = await _services.GetAllOpen(empresaId, page, itensPerPage);
+				var servicoList = await _services.GetAll(empresaId, page, itensPerPage, flag);
 				return Ok(servicoList);
 			}
 			catch

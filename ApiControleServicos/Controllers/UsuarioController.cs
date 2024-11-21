@@ -121,7 +121,7 @@ namespace ApiControleServicos.Controllers
 		}
 
 		[HttpPatch("password")]
-		public async Task<IActionResult> UpdateSenha(int id, string senha, string novaSenha)
+		public async Task<IActionResult> UpdateSenha(int id,  string novaSenha, string senha = "")
 		{
 			try
 			{

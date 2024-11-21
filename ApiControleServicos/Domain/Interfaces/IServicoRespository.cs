@@ -5,10 +5,9 @@ namespace ApiControleServicos.Domain
 	public interface IServicoRespository
 	{
 		Task Create(ServicoModel servico);
-		Task<int> GetTotalNumber(int empresaId, bool close);
+		Task<int> GetTotalNumber(int empresaId, string flag);
 
-        Task<List<ServicoDto>> GetAllOpen(int emrpesaId, int page, int itensPerPage);
-		Task<List<ServicoDto>> GetAllClosed(int emrpesaId, int page, int itensPerPage);
+        Task<List<ServicoDto>> GetAll(int emrpesaId, int page, int itensPerPage, string flag);
 		Task<ServicoDto> GetByIdDto(int Id);
 		Task<ServicoModel> GetById(int id);
 		void Update(ServicoModel servico);

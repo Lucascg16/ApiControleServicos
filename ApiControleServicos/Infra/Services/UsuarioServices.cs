@@ -35,12 +35,12 @@ namespace ApiControleServicos.Infra
 		{
 			return _usuarioRepository.GetByIdDto(id);
 		}
-        public Task<UsuarioDto> GetById(Guid id)
-        {
-            return _usuarioRepository.GetByIdDto(id);
-        }
+		public Task<UsuarioDto> GetById(Guid id)
+		{
+			return _usuarioRepository.GetByIdDto(id);
+		}
 
-        public Task<UsuarioDto> GetByName(string name)
+		public Task<UsuarioDto> GetByName(string name)
 		{
 			return _usuarioRepository.GetByName(name);
 		}
@@ -54,20 +54,23 @@ namespace ApiControleServicos.Infra
 		{
 			var usuario = await _usuarioRepository.GetById(usuarioNovo.Id);
 			usuario.UpdateUsuario(usuarioNovo.Nome, usuarioNovo.Email);
-            usuario.UpdateRole(usuarioNovo.Role);
+			usuario.UpdateRole(usuarioNovo.Role);
 
-            _usuarioRepository.Update(usuario);
+			_usuarioRepository.Update(usuario);
 		}
 
 		public async Task UpdateSenha(int id, string senha, string novaSenha)
 		{
 			var usuario = await _usuarioRepository.GetById(id);
 
-			if (usuario.Password != _criptoServices.Criptografa(senha))
+			if (!string.IsNullOrEmpty(senha))
 			{
-				Exception ex = new("A senha digitada não confere com a senha atual");
-				throw ex;
-            }
+				if (usuario.Password != _criptoServices.Criptografa(senha))
+				{
+					Exception ex = new("A senha digitada não confere com a senha atual");
+					throw ex;
+				}
+			}
 
 			usuario.UpdateSenha(_criptoServices.Criptografa(novaSenha));
 
