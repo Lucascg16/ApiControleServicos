@@ -37,28 +37,17 @@ namespace ApiControleServicos.Domain
 			}
 		}
 
-		public async Task<List<ServicoDto>> GetAll(int empresaId, int page, int itensPerPage, string flag)
+		public async Task<List<ServicoDto>> GetAll(int empresaId, int page, int itensPerPage, string flag, string? nome)
 		{
 			List<ServicoModel> servicoList;
-			switch (flag)
+			servicoList = await _context.Servicos.Where(x => x.EmpresaId == empresaId && x.Flag == flag)
+									.Skip((page - 1) * itensPerPage)
+									.Take(itensPerPage)
+									.OrderByDescending(x => x.DataCriacao).ToListAsync() ?? [];
+
+			if (!string.IsNullOrEmpty(nome))
 			{
-				case "Ativo":
-					servicoList = await _context.Servicos.Where(x => x.DataFinalizado == null && !x.Excluido && x.EmpresaId == empresaId)
-											.Skip((page - 1) * itensPerPage).Take(itensPerPage).OrderByDescending(x => x.DataCriacao).ToListAsync();
-					break;
-				case "Cancelado":
-					servicoList = await _context.Servicos.Where(x => x.DataFinalizado == null && x.Excluido && x.EmpresaId == empresaId)
-											.Skip((page - 1) * itensPerPage).Take(itensPerPage).OrderByDescending(x => x.DataCriacao).ToListAsync();
-					break;
-
-				case "Finalizado":
-					servicoList = await _context.Servicos.Where(x => x.DataFinalizado != null && !x.Excluido && x.EmpresaId == empresaId)
-											.Skip((page - 1) * itensPerPage).Take(itensPerPage).OrderByDescending(x => x.DataCriacao).ToListAsync();
-					break;
-
-				default:
-					servicoList = [];
-					break;
+				servicoList = servicoList.Where(x => x.Nome == nome).ToList();
 			}
 
 			List<ServicoDto> dtoList = [];

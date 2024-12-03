@@ -5,7 +5,7 @@ namespace ApiControleServicos.Infra
 	{
 		Task Create(CreateServicoModel novoServico);
 		Task<int> GetAllNumber(int empresaId, string flag);
-		Task<List<ServicoDto>> GetAll(int emrpesaId, int page, int itensPerPage, string flag);
+		Task<List<ServicoDto>> GetAll(int emrpesaId, int page, int itensPerPage, string flag, string? nome);
 		Task<ServicoDto> GetById(int id);
 		Task Update(UpdateServicoModel servico);
 		Task FinalizarServico(int id, double faturamento);

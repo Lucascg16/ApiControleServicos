@@ -23,9 +23,9 @@ namespace ApiControleServicos.Infra
 			return await _repository.GetTotalNumber(empresaId, flag);
 		}
 
-		public Task<List<ServicoDto>> GetAll(int emrpesaId, int page, int itensPerPage, string flag)
+		public Task<List<ServicoDto>> GetAll(int emrpesaId, int page, int itensPerPage, string flag, string? nome)
 		{
-			return _repository.GetAll(emrpesaId, page, itensPerPage, flag);
+			return _repository.GetAll(emrpesaId, page, itensPerPage, flag, nome);
 		}
 
 		public Task<ServicoDto> GetById(int id)

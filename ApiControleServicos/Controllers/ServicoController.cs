@@ -44,11 +44,11 @@ namespace ApiControleServicos.Controllers
 		}
 
 		[HttpGet("all")]
-		public async Task<IActionResult> GetAll([Required]int empresaId, string flag = "Ativo", int page = 1, int itensPerPage = 10)
+		public async Task<IActionResult> GetAll([Required]int empresaId, string flag = "Ativo", string? nome = null, int page = 1, int itensPerPage = 10)
 		{
 			try
 			{
-				var servicoList = await _services.GetAll(empresaId, page, itensPerPage, flag);
+				var servicoList = await _services.GetAll(empresaId, page, itensPerPage, flag, nome);
 				return Ok(servicoList);
 			}
 			catch

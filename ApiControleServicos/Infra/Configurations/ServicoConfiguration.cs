@@ -8,7 +8,7 @@ namespace ApiControleServicos.Infra.Configurations
     {
         public void Configure(EntityTypeBuilder<ServicoModel> builder)
         {
-            builder.ToTable("servico");
+            builder.ToTable("Servico");
 
             builder.HasKey(x => x.Id);
 
@@ -29,6 +29,10 @@ namespace ApiControleServicos.Infra.Configurations
             builder.Property(x => x.OrcamentoInicial);
             builder.Property(x => x.ValorFaturado);
             builder.Property(x => x.LucroLiquido);
+
+            builder.Property(x => x.Flag)
+                .IsRequired()
+                .HasDefaultValue("Ativo");
 
             builder.Property(x => x.DataFinalizado)
                 .HasColumnName("DataFinalizado")

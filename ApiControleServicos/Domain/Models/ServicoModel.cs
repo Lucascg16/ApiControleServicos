@@ -21,6 +21,7 @@
         public double? ValorFaturado { get; set; } = null;
         public double? LucroLiquido { get; set; } = null;
         public DateTime? DataFinalizado { get; set; } = null;
+        public string Flag { get; set; } = "Ativo";
         public int? UsuarioId { get; set; } = 0;
         public int? EmpresaId { get; set; } = 0;
 
@@ -37,11 +38,13 @@
 			ValorFaturado = faturamento;
 			LucroLiquido = faturamento - Custos;
 			DataFinalizado = DateTime.Now;
+            Flag = "Finalizado";
 			Atualizar();
 		}
 
 		public void Deletar()
         {
+            Flag = "Cancelado";
             Excluir();
         }
     }
