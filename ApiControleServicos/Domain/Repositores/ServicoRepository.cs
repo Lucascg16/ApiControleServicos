@@ -47,7 +47,7 @@ namespace ApiControleServicos.Domain
 
 			if (!string.IsNullOrEmpty(nome))
 			{
-				servicoList = servicoList.Where(x => x.Nome == nome).ToList();
+				servicoList = servicoList.Where(x => x.Nome.Contains(nome)).ToList();
 			}
 
 			List<ServicoDto> dtoList = [];
