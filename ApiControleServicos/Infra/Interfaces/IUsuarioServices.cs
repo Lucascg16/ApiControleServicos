@@ -11,7 +11,7 @@ namespace ApiControleServicos.Infra
         Task<UsuarioModel> GetByUserName(string username);
 		Task<UsuarioDto> GetByName(string name);
 		Task<int> GetAllNumber(int empresaId);
-        Task<List<UsuarioDto>> GetAll(int empresaId, int page, int itensPerPage);
+        Task<List<UsuarioDto>> GetAll(int empresaId, int page, int itensPerPage, string nome);
 		Task Update(UpdateUsuarioModel usuario);
 		Task UpdateSenha(int id, string senha, string novaSenha);
 		Task Delete(int id);

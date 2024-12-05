@@ -26,9 +26,9 @@ namespace ApiControleServicos.Infra
 			return await _usuarioRepository.GetAllNumber(empresaId);
 		}
 
-		public Task<List<UsuarioDto>> GetAll(int empresaId, int page, int itensPerPage)
+		public Task<List<UsuarioDto>> GetAll(int empresaId, int page, int itensPerPage, string nome)
 		{
-			return _usuarioRepository.GetAll(empresaId, page, itensPerPage);
+			return _usuarioRepository.GetAll(empresaId, page, itensPerPage, nome);
 		}
 
 		public Task<UsuarioDto> GetById(int id)
@@ -63,16 +63,14 @@ namespace ApiControleServicos.Infra
 		{
 			var usuario = await _usuarioRepository.GetById(id);
 
-			if (!string.IsNullOrEmpty(senha))
-			{
-				if (usuario.Password != _criptoServices.Criptografa(senha))
-				{
-					Exception ex = new("A senha digitada não confere com a senha atual");
-					throw ex;
-				}
-			}
+			if (usuario.Id == 0)
+				throw new("Usuário não encontrado");
+			if (string.IsNullOrEmpty(senha))
+				throw new("A senha atual deve ser preenchida");
+            if (usuario.Password != _criptoServices.Criptografa(senha))
+				throw new("A senha digitada não confere com a senha atual");
 
-			usuario.UpdateSenha(_criptoServices.Criptografa(novaSenha));
+            usuario.UpdateSenha(_criptoServices.Criptografa(novaSenha));
 
 			_usuarioRepository.Update(usuario);
 		}

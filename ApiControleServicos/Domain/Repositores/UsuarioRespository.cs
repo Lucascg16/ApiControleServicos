@@ -27,14 +27,17 @@ namespace ApiControleServicos.Domain
 			return await _context.Usuario.Where(x => x.EmpresaId == empresaId).CountAsync();
 		}
 
-		public async Task<List<UsuarioDto>> GetAll(int empresaId, int page, int itensPerPage)
+		public async Task<List<UsuarioDto>> GetAll(int empresaId, int page, int itensPerPage, string nome)
 		{
 			List<UsuarioDto> Usuarios = [];
 			var usuarioList = await _context.Usuario.Where(x => !x.Excluido && x.EmpresaId == empresaId)
-									.Skip((page - 1) * itensPerPage).Take(itensPerPage).ToListAsync();
+									.Skip((page - 1) * itensPerPage).Take(itensPerPage).ToListAsync() ?? [];
 
 			if (usuarioList.Count == 0)
 				return [];
+
+			if (!string.IsNullOrEmpty(nome))
+				usuarioList = usuarioList.Where(x => x.Nome.Contains(nome, StringComparison.CurrentCultureIgnoreCase)).ToList();
 
 			foreach (var usuario in usuarioList) 
 			{

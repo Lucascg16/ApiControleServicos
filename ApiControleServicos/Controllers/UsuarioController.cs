@@ -61,11 +61,11 @@ namespace ApiControleServicos.Controllers
 
 		[HttpGet("All")]
 		[Authorize(Roles = "Admin")]
-		public async Task<IActionResult> GetAll([Required]int empresaId, int page = 1, int itensPerPage = 10)
+		public async Task<IActionResult> GetAll([Required]int empresaId, int page = 1, int itensPerPage = 10, string nome = "")
 		{
 			try
 			{
-				var usuarioList = await _usuarioServices.GetAll(empresaId ,page, itensPerPage);
+				var usuarioList = await _usuarioServices.GetAll(empresaId, page, itensPerPage, nome);
 				return Ok(usuarioList);
 			}
 			catch

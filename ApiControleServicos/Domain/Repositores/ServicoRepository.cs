@@ -24,20 +24,10 @@ namespace ApiControleServicos.Domain
 
 		public async Task<int> GetTotalNumber(int empresaId, string flag)
 		{
-			switch (flag)
-			{
-				case "Ativo":
-					return await _context.Servicos.Where(x => x.DataFinalizado == null && !x.Excluido && x.EmpresaId == empresaId).CountAsync();
-				case "Cancelado":
-					return await _context.Servicos.Where(x => x.DataFinalizado == null && x.Excluido && x.EmpresaId == empresaId).CountAsync();
-				case "Finalizado":
-					return await _context.Servicos.Where(x => x.DataFinalizado != null && !x.Excluido && x.EmpresaId == empresaId).CountAsync();
-				default:
-					return 0;
-			}
-		}
+            return await _context.Servicos.Where(x => x.EmpresaId == empresaId && x.Flag == flag).CountAsync();
+        }
 
-		public async Task<List<ServicoDto>> GetAll(int empresaId, int page, int itensPerPage, string flag, string? nome)
+        public async Task<List<ServicoDto>> GetAll(int empresaId, int page, int itensPerPage, string flag, string? nome)
 		{
 			List<ServicoModel> servicoList;
 			servicoList = await _context.Servicos.Where(x => x.EmpresaId == empresaId && x.Flag == flag)
@@ -47,7 +37,7 @@ namespace ApiControleServicos.Domain
 
 			if (!string.IsNullOrEmpty(nome))
 			{
-				servicoList = servicoList.Where(x => x.Nome.ToUpper().Contains(nome.ToUpper())).ToList();
+				servicoList = servicoList.Where(x => x.Nome.Contains(nome, StringComparison.CurrentCultureIgnoreCase)).ToList();
 			}
 
 			List<ServicoDto> dtoList = [];
