@@ -44,7 +44,9 @@ builder.Services.AddSwaggerGen(c =>
 	});
 });
 
-var key = Encoding.ASCII.GetBytes(Settings.Secret);
+var secrat = builder.Configuration.GetSection("ApiSettings")["Secret"]; //secrat == secret
+var key = Encoding.ASCII.GetBytes(string.IsNullOrEmpty(secrat) ? throw new("O secret é necessário para gerar o token") : secrat);
+
 builder.Services.AddAuthentication(x =>
 {
 	x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
