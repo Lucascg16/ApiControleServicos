@@ -15,10 +15,10 @@ namespace ApiControleServicos.Infra
 			services.AddScoped<IEmpresaServices, EmpresaServices>();
             services.AddScoped<IServicoServices, ServicoServices>();
             services.AddScoped<ITokenServices, TokenServices>();
-            services.AddScoped<ICriptoServices, CriptoServices>();
+            services.AddSingleton<CriptoServices>();
 
-			//Respositores
-			services.AddScoped<IUsuarioRepository, UsuarioRespository>();
+            //Respositores
+            services.AddScoped<IUsuarioRepository, UsuarioRespository>();
             services.AddScoped<IEmpresaRepository, EmpresaRepository>();
             services.AddScoped<IServicoRespository, ServicoRepository>();
 

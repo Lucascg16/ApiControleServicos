@@ -11,20 +11,21 @@ namespace ApiControleServicos.Controllers
 		private readonly ITokenServices _tokenServices;
 		private readonly IUsuarioServices _usuarioServices;
 		private readonly IEmpresaServices _empresaServices;
-		private readonly ICriptoServices _criptoServices;
-		public AuthenticateController(ITokenServices tokenServices, IUsuarioServices services,
-			IEmpresaServices empresa, ICriptoServices criptoServices)
-		{
-			_tokenServices = tokenServices;
-			_usuarioServices = services;
-			_empresaServices = empresa;
-			_criptoServices = criptoServices;
-		}
+		private readonly CriptoServices _criptoServices;
 
-		[HttpPost]
+        public AuthenticateController(ITokenServices tokenServices, IUsuarioServices services,
+            IEmpresaServices empresa, CriptoServices criptoServices)
+        {
+            _tokenServices = tokenServices;
+            _usuarioServices = services;
+            _empresaServices = empresa;
+            _criptoServices = criptoServices;
+        }
+
+        [HttpPost]
 		public async Task<IActionResult> Authentication([FromBody] LoginModel login)
 		{
-			try
+ 			try
 			{
 				var usuarioDataBase = await _usuarioServices.GetByUserName(login.Email);
 

@@ -3,21 +3,54 @@ using System.Text;
 
 namespace ApiControleServicos.Infra
 {
-	public class CriptoServices : ICriptoServices
-	{
-		public string Criptografa(string input)
+	public class CriptoServices(IConfiguration config)
+    {
+        private readonly IConfiguration _config = config;
+
+        public string Criptografa(string input)
 		{
-			SHA256 sHA256 = SHA256.Create();
-			byte[] inputBytes = Encoding.ASCII.GetBytes(input);
-			byte[] hash = sHA256.ComputeHash(inputBytes);
+            var key = _config.GetSection("CriptoSettings")["Key"];
+            var IV = _config.GetSection("CriptoSettings")["IV"];
 
-			StringBuilder hashString = new StringBuilder();
+            using (Aes aes = Aes.Create())
+            {
+                aes.Key = Encoding.UTF8.GetBytes(string.IsNullOrEmpty(key) ? throw new Exception("A Key deve ser preenchida, verifique o appsettings"): key);
+                aes.IV = Encoding.UTF8.GetBytes(string.IsNullOrEmpty(IV) ? throw new Exception("A IV deve ser preenchida, verifique o appsettings"): IV);
 
-			foreach (byte b in hash)
-			{
-				hashString.Append(b.ToString("X2"));
-			}
-			return hashString.ToString();
-		}
-	}
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    using (CryptoStream cs = new CryptoStream(ms, aes.CreateEncryptor(), CryptoStreamMode.Write))
+                    {
+                        byte[] inputBytes = Encoding.UTF8.GetBytes(input);
+                        cs.Write(inputBytes, 0, inputBytes.Length);
+                        cs.FlushFinalBlock();
+                    }
+                    return Convert.ToBase64String(ms.ToArray());
+                }
+            }
+        }
+
+        public string Descriptografar(string textoCriptografado)
+        {
+            var key = _config.GetSection("CriptoSettings")["Key"];
+            var IV = _config.GetSection("CriptoSettings")["IV"];
+
+            using (Aes aes = Aes.Create())
+            {
+                aes.Key = Encoding.UTF8.GetBytes(string.IsNullOrEmpty(key) ? throw new Exception("A Key deve ser preenchida, verifique o appsettings"): key);
+                aes.IV = Encoding.UTF8.GetBytes(string.IsNullOrEmpty(IV) ? throw new Exception("A IV deve ser preenchida, verifique o appsettings"): IV);
+
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    using (CryptoStream cs = new CryptoStream(ms, aes.CreateDecryptor(), CryptoStreamMode.Write))
+                    {
+                        byte[] inputBytes = Convert.FromBase64String(textoCriptografado);
+                        cs.Write(inputBytes, 0, inputBytes.Length);
+                        cs.FlushFinalBlock();
+                    }
+                    return Encoding.UTF8.GetString(ms.ToArray());
+                }
+            }
+        }
+    }
 }
