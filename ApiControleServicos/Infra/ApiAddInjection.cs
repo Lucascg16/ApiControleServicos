@@ -1,5 +1,6 @@
 ﻿using ApiControleServicos.Domain;
 using Microsoft.EntityFrameworkCore;
+using System.Data.Common;
 
 namespace ApiControleServicos.Infra
 {
@@ -7,8 +8,11 @@ namespace ApiControleServicos.Infra
     {
         public static IServiceCollection AddInfra(this IServiceCollection services, IConfiguration config)
         {
-            var connectionString = config.GetConnectionString("DefaultConnection");
+            var connectionString = config.GetConnectionString("DefaultConnection") ?? throw new Exception("A string de conexão não foi encontrada, favor verificar o appsettings.");
+            connectionString = UpdateConnectionPassword(connectionString, config);
+
             services.AddDbContext<ApiDbContext>(options => options.UseSqlServer(connectionString));
+            
 
             //Services
             services.AddScoped<IUsuarioServices, UsuarioServices>();
@@ -26,18 +30,17 @@ namespace ApiControleServicos.Infra
             return services;
         }
 
-        public static void MigrationInicialization(this IApplicationBuilder app)
+        public static string UpdateConnectionPassword(string connectionString, IConfiguration config)
         {
-            try
+            var builder = new DbConnectionStringBuilder
             {
-				using var serviceScope = app.ApplicationServices.CreateScope();
-				var serviceDb = serviceScope.ServiceProvider.GetService<ApiDbContext>();
-				serviceDb?.Database.Migrate();
-			}
-			catch
-            {
-                return;
-            }
-		}
+                ConnectionString = connectionString
+            };
+
+            var decriptyPass = CriptoServices.Descriptografar(builder["Password"].ToString() ?? "", config);
+            builder["Password"] = decriptyPass;
+
+            return builder.ConnectionString;
+        }
     }
 }

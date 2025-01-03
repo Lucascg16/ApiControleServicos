@@ -1,4 +1,5 @@
 ﻿using ApiControleServicos.Infra;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApiControleServicos.Controllers
@@ -8,10 +9,12 @@ namespace ApiControleServicos.Controllers
     public class CriptoController : ControllerBase
     {
         private readonly CriptoServices _criptoServices;
+        private readonly IConfiguration _config;
 
-        public CriptoController(CriptoServices criptoServices)
+        public CriptoController(CriptoServices criptoServices, IConfiguration config)
         {
             _criptoServices = criptoServices;
+            _config = config;
         }
 
         [HttpGet("cript")]
@@ -21,9 +24,10 @@ namespace ApiControleServicos.Controllers
         }
 
         [HttpGet("decript")]
+        [Authorize]
         public IActionResult Decript(string input)
         {
-            return Ok(_criptoServices.Descriptografar(input));
+            return Ok(CriptoServices.Descriptografar(input, _config));
         }
     }
 }

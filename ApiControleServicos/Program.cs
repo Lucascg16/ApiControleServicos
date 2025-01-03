@@ -86,7 +86,7 @@ else
     app.UseExceptionHandler("/error");
 }
 
-ApiAddInjection.MigrationInicialization(app);//Inicializa as migrations automaticamente caso o banco esteja desatualizado.
+Ultilitarios.MigrationInicialization(app);//Inicializa as migrations automaticamente caso o banco esteja desatualizado.
 
 app.UseHttpsRedirection();
 
