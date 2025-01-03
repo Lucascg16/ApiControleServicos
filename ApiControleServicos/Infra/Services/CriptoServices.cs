@@ -3,14 +3,12 @@ using System.Text;
 
 namespace ApiControleServicos.Infra
 {
-	public class CriptoServices(IConfiguration config)
-    {
-        private readonly IConfiguration _config = config;
-
-        public string Criptografa(string input)
+	public static class CriptoServices
+    {        
+        public static string Criptografa(string input, IConfiguration config)
 		{
-            var key = _config.GetSection("CriptoSettings")["Key"];
-            var IV = _config.GetSection("CriptoSettings")["IV"];
+            var key = config.GetSection("CriptoSettings")["Key"];
+            var IV = config.GetSection("CriptoSettings")["IV"];
 
             using Aes aes = Aes.Create();
             aes.Key = Encoding.UTF8.GetBytes(string.IsNullOrEmpty(key) ? throw new Exception("A Key deve ser preenchida, verifique o appsettings") : key);

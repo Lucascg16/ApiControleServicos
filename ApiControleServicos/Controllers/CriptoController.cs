@@ -8,19 +8,17 @@ namespace ApiControleServicos.Controllers
     [Route("api/v1/criptografia")]
     public class CriptoController : ControllerBase
     {
-        private readonly CriptoServices _criptoServices;
         private readonly IConfiguration _config;
 
-        public CriptoController(CriptoServices criptoServices, IConfiguration config)
+        public CriptoController(IConfiguration config)
         {
-            _criptoServices = criptoServices;
             _config = config;
         }
 
         [HttpGet("cript")]
         public IActionResult Cript(string input)
         {
-            return Ok(_criptoServices.Criptografa(input));
+            return Ok(CriptoServices.Criptografa(input, _config));
         }
 
         [HttpGet("decript")]

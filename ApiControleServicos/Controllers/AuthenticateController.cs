@@ -11,15 +11,15 @@ namespace ApiControleServicos.Controllers
 		private readonly ITokenServices _tokenServices;
 		private readonly IUsuarioServices _usuarioServices;
 		private readonly IEmpresaServices _empresaServices;
-		private readonly CriptoServices _criptoServices;
+		private readonly IConfiguration _config;
 
         public AuthenticateController(ITokenServices tokenServices, IUsuarioServices services,
-            IEmpresaServices empresa, CriptoServices criptoServices)
+            IEmpresaServices empresa, IConfiguration config)
         {
             _tokenServices = tokenServices;
             _usuarioServices = services;
             _empresaServices = empresa;
-            _criptoServices = criptoServices;
+            _config = config;
         }
 
         [HttpPost]
@@ -32,7 +32,7 @@ namespace ApiControleServicos.Controllers
 				if (usuarioDataBase.Id == 0)
 					return Unauthorized("Email ou senha invalidos");
 
-				if (_criptoServices.Criptografa(login.Password) != usuarioDataBase.Password)
+				if (CriptoServices.Criptografa(login.Password, _config) != usuarioDataBase.Password)
 					return Unauthorized("Email ou senha invalidos");
 
 				var token = _tokenServices.GenerateToken(usuarioDataBase);
