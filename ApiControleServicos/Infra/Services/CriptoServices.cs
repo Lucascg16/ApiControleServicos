@@ -1,18 +1,19 @@
-﻿using System.Security.Cryptography;
+﻿using ApiControleServicos.Domain.Models;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace ApiControleServicos.Infra
 {
 	public static class CriptoServices
-    {        
-        public static string Criptografa(string input, IConfiguration config)
-		{
-            var key = config.GetSection("CriptoSettings")["Key"];
-            var IV = config.GetSection("CriptoSettings")["IV"];
+    {
+        private static readonly string Key = ConfigurationHelperModel.Configuration?.GetSection("CriptoSettings")["Key"] ?? throw new Exception("A Key deve ser preenchida, verifique o appsettings");
+        private static readonly string Iv = ConfigurationHelperModel.Configuration?.GetSection("CriptoSettings")["IV"] ?? throw new Exception("A IV deve ser preenchida, verifique o appsettings");
 
+        public static string Criptografa(string input)
+		{
             using Aes aes = Aes.Create();
-            aes.Key = Encoding.UTF8.GetBytes(string.IsNullOrEmpty(key) ? throw new Exception("A Key deve ser preenchida, verifique o appsettings") : key);
-            aes.IV = Encoding.UTF8.GetBytes(string.IsNullOrEmpty(IV) ? throw new Exception("A IV deve ser preenchida, verifique o appsettings") : IV);
+            aes.Key = Encoding.UTF8.GetBytes(Key);
+            aes.IV = Encoding.UTF8.GetBytes(Iv);
 
             using MemoryStream ms = new();
             using (CryptoStream cs = new(ms, aes.CreateEncryptor(), CryptoStreamMode.Write))
@@ -24,16 +25,13 @@ namespace ApiControleServicos.Infra
             return Convert.ToBase64String(ms.ToArray());
         }
 
-        public static string Descriptografar(string textoCriptografado, IConfiguration _config)
+        public static string Descriptografar(string textoCriptografado)
         {
-            var key = _config.GetSection("CriptoSettings")["Key"];
-            var IV = _config.GetSection("CriptoSettings")["IV"];
-
             try
             {
                 using Aes aes = Aes.Create();
-                aes.Key = Encoding.UTF8.GetBytes(string.IsNullOrEmpty(key) ? throw new Exception("A Key deve ser preenchida, verifique o appsettings") : key);
-                aes.IV = Encoding.UTF8.GetBytes(string.IsNullOrEmpty(IV) ? throw new Exception("A IV deve ser preenchida, verifique o appsettings") : IV);
+                aes.Key = Encoding.UTF8.GetBytes(Key);
+                aes.IV = Encoding.UTF8.GetBytes(Iv);
 
                 using MemoryStream ms = new();
                 using (CryptoStream cs = new(ms, aes.CreateDecryptor(), CryptoStreamMode.Write))

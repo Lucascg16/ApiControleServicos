@@ -1,5 +1,6 @@
 using ApiControleServicos;
 using ApiControleServicos.Domain;
+using ApiControleServicos.Domain.Models;
 using ApiControleServicos.Infra;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -11,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+ConfigurationHelperModel.Configuration = builder.Configuration;
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddInfra(builder.Configuration);

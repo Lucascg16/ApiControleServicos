@@ -9,7 +9,7 @@ namespace ApiControleServicos.Infra
         public static IServiceCollection AddInfra(this IServiceCollection services, IConfiguration config)
         {
             var connectionString = config.GetConnectionString("DefaultConnection") ?? throw new Exception("A string de conexão não foi encontrada, favor verificar o appsettings.");
-            connectionString = UpdateConnectionPassword(connectionString, config);
+            connectionString = UpdateConnectionPassword(connectionString);
 
             services.AddDbContext<ApiDbContext>(options => options.UseSqlServer(connectionString));
             
@@ -29,14 +29,14 @@ namespace ApiControleServicos.Infra
             return services;
         }
 
-        public static string UpdateConnectionPassword(string connectionString, IConfiguration config)
+        public static string UpdateConnectionPassword(string connectionString)
         {
             var builder = new DbConnectionStringBuilder
             {
                 ConnectionString = connectionString
             };
 
-            var decriptyPass = CriptoServices.Descriptografar(builder["Password"].ToString() ?? "", config);
+            var decriptyPass = CriptoServices.Descriptografar(builder["Password"].ToString() ?? "");
             builder["Password"] = decriptyPass;
 
             return builder.ConnectionString;

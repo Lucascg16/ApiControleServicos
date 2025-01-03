@@ -6,17 +6,15 @@ namespace ApiControleServicos.Infra
 	public class UsuarioServices : IUsuarioServices
 	{
 		private readonly IUsuarioRepository _usuarioRepository;
-		private readonly IConfiguration _config;
 
-        public UsuarioServices(IUsuarioRepository usuarioRepository, IConfiguration config)
+        public UsuarioServices(IUsuarioRepository usuarioRepository)
         {
-            _usuarioRepository = usuarioRepository;
-            _config = config;
+			_usuarioRepository = usuarioRepository;
         }
 
         public async Task Create(CreateUsuarioModel novoUsuario)
 		{
-			UsuarioModel usuario = new(novoUsuario.Nome, novoUsuario.Email, CriptoServices.Criptografa(novoUsuario.Password, _config),
+			UsuarioModel usuario = new(novoUsuario.Nome, novoUsuario.Email, CriptoServices.Criptografa(novoUsuario.Password),
 									novoUsuario.Role, novoUsuario.EmpresaId, Guid.NewGuid(), novoUsuario.Dono);
 			await _usuarioRepository.Create(usuario);
 		}
@@ -67,10 +65,10 @@ namespace ApiControleServicos.Infra
 				throw new("Usuário não encontrado");
 			if (string.IsNullOrEmpty(senha))
 				throw new("A senha atual deve ser preenchida");
-            if (usuario.Password != CriptoServices.Criptografa(senha, _config))
+            if (usuario.Password != CriptoServices.Criptografa(senha))
 				throw new("A senha digitada não confere com a senha atual");
 
-            usuario.UpdateSenha(CriptoServices.Criptografa(novaSenha, _config));
+            usuario.UpdateSenha(CriptoServices.Criptografa(novaSenha));
 
 			_usuarioRepository.Update(usuario);
 		}
