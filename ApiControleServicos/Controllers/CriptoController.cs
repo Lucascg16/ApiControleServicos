@@ -18,7 +18,7 @@ namespace ApiControleServicos.Controllers
         [Authorize]
         public IActionResult Decript(string input)
         {
-            return Ok(CriptoServices.Descriptografar(input));
+            return Ok(CriptoServices.Descriptografa(input));
         }
     }
 }

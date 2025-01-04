@@ -6,8 +6,8 @@ namespace ApiControleServicos.Infra
 {
 	public static class CriptoServices
     {
-        private static readonly string Key = ConfigurationHelperModel.Configuration?.GetSection("CriptoSettings")["Key"] ?? throw new Exception("A Key deve ser preenchida, verifique o appsettings");
-        private static readonly string Iv = ConfigurationHelperModel.Configuration?.GetSection("CriptoSettings")["IV"] ?? throw new Exception("A IV deve ser preenchida, verifique o appsettings");
+        private static readonly string Key = ConfigurationHelperModel.Configuration?.GetSection("CriptoSettings")["Key"] ?? throw new("A Key deve ser preenchida, verifique o appsettings");
+        private static readonly string Iv = ConfigurationHelperModel.Configuration?.GetSection("CriptoSettings")["IV"] ?? throw new("A IV deve ser preenchida, verifique o appsettings");
 
         public static string Criptografa(string input)
 		{
@@ -25,7 +25,7 @@ namespace ApiControleServicos.Infra
             return Convert.ToBase64String(ms.ToArray());
         }
 
-        public static string Descriptografar(string textoCriptografado)
+        public static string Descriptografa(string textoCriptografado)
         {
             try
             {

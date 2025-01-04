@@ -36,7 +36,7 @@ namespace ApiControleServicos.Infra
                 ConnectionString = connectionString
             };
 
-            var decriptyPass = CriptoServices.Descriptografar(builder["Password"].ToString() ?? "");
+            var decriptyPass = CriptoServices.Descriptografa(builder["Password"].ToString() ?? "");
             builder["Password"] = decriptyPass;
 
             return builder.ConnectionString;

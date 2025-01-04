@@ -65,7 +65,7 @@ namespace ApiControleServicos.Infra
 				throw new("Usuário não encontrado");
 			if (string.IsNullOrEmpty(senha))
 				throw new("A senha atual deve ser preenchida");
-            if (usuario.Password != CriptoServices.Criptografa(senha))
+            if (CriptoServices.Descriptografa(usuario.Password) != senha)
 				throw new("A senha digitada não confere com a senha atual");
 
             usuario.UpdateSenha(CriptoServices.Criptografa(novaSenha));

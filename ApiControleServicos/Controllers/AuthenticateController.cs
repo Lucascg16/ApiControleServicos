@@ -30,7 +30,7 @@ namespace ApiControleServicos.Controllers
 				if (usuarioDataBase.Id == 0)
 					return Unauthorized("Email ou senha invalidos");
 
-				if (CriptoServices.Criptografa(login.Password) != usuarioDataBase.Password)
+				if (login.Password != CriptoServices.Descriptografa(usuarioDataBase.Password))
 					return Unauthorized("Email ou senha invalidos");
 
 				var token = _tokenServices.GenerateToken(usuarioDataBase);
