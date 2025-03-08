@@ -31,7 +31,7 @@ namespace ApiControleServicos.Controllers
 		}
 
 		[HttpGet("total")]
-		public async Task<IActionResult> GetTotalItems(int empresaId, string flag)
+		public async Task<IActionResult> GetTotalItems(int empresaId, ServiceFlagEnum flag)
 		{
 			try
 			{
@@ -44,7 +44,7 @@ namespace ApiControleServicos.Controllers
 		}
 
 		[HttpGet("all")]
-		public async Task<IActionResult> GetAll([Required]int empresaId, string flag = "Ativo", string? nome = null, int page = 1, int itensPerPage = 10)
+		public async Task<IActionResult> GetAll([Required]int empresaId, ServiceFlagEnum flag = ServiceFlagEnum.Ativo, string? nome = null, int page = 1, int itensPerPage = 10)
 		{
 			try
 			{

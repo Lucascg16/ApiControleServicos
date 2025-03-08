@@ -18,12 +18,12 @@ namespace ApiControleServicos.Infra
 			await _repository.Create(servico);
 		}
 
-		public async Task<int> GetAllNumber(int empresaId, string flag)
+		public async Task<int> GetAllNumber(int empresaId, ServiceFlagEnum flag)
 		{
 			return await _repository.GetTotalNumber(empresaId, flag);
 		}
 
-		public Task<List<ServicoDto>> GetAll(int emrpesaId, int page, int itensPerPage, string flag, string? nome)
+		public Task<List<ServicoDto>> GetAll(int emrpesaId, int page, int itensPerPage, ServiceFlagEnum flag, string? nome)
 		{
 			return _repository.GetAll(emrpesaId, page, itensPerPage, flag, nome);
 		}

@@ -34,7 +34,7 @@ namespace ApiControleServicos.Infra.Configurations
 
             builder.Property(x => x.Role)
                 .IsRequired()
-                .HasDefaultValue("none");
+                .HasDefaultValue(UserRoleEnum.None);
 
 			builder.HasOne<EmpresaModel>()
                 .WithMany()

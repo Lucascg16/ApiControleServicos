@@ -15,12 +15,17 @@ namespace ApiControleServicos.Infra
             _config = config;
         }
 
-        public string GenerateToken(UsuarioModel usuario, int expires = 2) 
+        public string GenerateToken(UsuarioModel usuario, int expires = 4, bool isLogin = true) 
 		{
 
             var secrat = _config.GetSection("ApiSettings")["Secret"]; //secrat == secret
             var key = Encoding.ASCII.GetBytes(string.IsNullOrEmpty(secrat) ? throw new("O secret é necessário para gerar o token") : secrat);
-            var signingCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);
+            SigningCredentials signingCredentials = null!;
+
+            if (isLogin)
+            {
+	            signingCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);
+            }
 
 			var tokenOptions = new JwtSecurityToken(
 				issuer: _config.GetSection("ApiSettings")["Issuer"] ?? "",

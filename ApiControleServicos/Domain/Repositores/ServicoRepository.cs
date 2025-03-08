@@ -22,12 +22,12 @@ namespace ApiControleServicos.Domain
 			await _context.SaveChangesAsync();
 		}
 
-		public async Task<int> GetTotalNumber(int empresaId, string flag)
+		public async Task<int> GetTotalNumber(int empresaId, ServiceFlagEnum flag)
 		{
             return await _context.Servicos.Where(x => x.EmpresaId == empresaId && x.Flag == flag).CountAsync();
         }
 
-        public async Task<List<ServicoDto>> GetAll(int empresaId, int page, int itensPerPage, string flag, string? nome)
+        public async Task<List<ServicoDto>> GetAll(int empresaId, int page, int itensPerPage, ServiceFlagEnum flag, string? nome)
 		{
 			var servicoList = await _context.Servicos.Where(x => x.EmpresaId == empresaId && x.Flag == flag)
 									.Skip((page - 1) * itensPerPage)
@@ -42,15 +42,15 @@ namespace ApiControleServicos.Domain
 			return _mapper.Map<List<ServicoDto>>(servicoList);
 		}
 
-		public async Task<ServicoDto> GetByIdDto(int Id)
+		public async Task<ServicoDto> GetByIdDto(int id)
 		{
-			var servico = await _context.Servicos.FindAsync(Id);
+			var servico = await _context.Servicos.FindAsync(id);
 			return _mapper.Map<ServicoDto>(servico);
 		}
 
-		public async Task<ServicoModel> GetById(int Id)
+		public async Task<ServicoModel> GetById(int id)
 		{
-			return await _context.Servicos.FindAsync(Id) ?? new();
+			return await _context.Servicos.FindAsync(id) ?? new();
 		}
 
 		public void Update(ServicoModel servico)

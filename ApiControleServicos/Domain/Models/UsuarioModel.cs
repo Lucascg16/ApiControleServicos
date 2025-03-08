@@ -5,7 +5,7 @@
         public string? Nome { get; set; }
         public string? Email { get; set; }
         public string? Password { get; set; }
-        public string Role { get; set; } = "none";
+        public UserRoleEnum Role { get; set; }
         public int EmpresaId { get; set; }
         public Guid? VId { get; set; } //VId = visual id, pode ser visto na url.
         public bool Dono {  get; set; } = false;
@@ -15,11 +15,11 @@
             Nome = string.Empty;
             Email = string.Empty;
             Password = string.Empty;
-            Role = "none";
+            Role = UserRoleEnum.None;
             VId = Guid.Empty;
         }
 
-        public UsuarioModel(string nome, string email, string passWord, string role, int empresaId, Guid? vId, bool dono)
+        public UsuarioModel(string nome, string email, string passWord, UserRoleEnum role, int empresaId, Guid? vId, bool dono)
         {
             Nome = nome;
             Email = email;
@@ -43,7 +43,7 @@
             Atualizar();
         }
 
-        public void UpdateRole(string role) 
+        public void UpdateRole(UserRoleEnum role) 
         {
             Role = role;
         }

@@ -1,4 +1,5 @@
-﻿using ApiControleServicos.Domain.Models;
+﻿using ApiControleServicos.Domain;
+using ApiControleServicos.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -32,7 +33,7 @@ namespace ApiControleServicos.Infra.Configurations
 
             builder.Property(x => x.Flag)
                 .IsRequired()
-                .HasDefaultValue("Ativo");
+                .HasDefaultValue(ServiceFlagEnum.Ativo);
 
             builder.Property(x => x.DataFinalizado)
                 .HasColumnName("DataFinalizado")

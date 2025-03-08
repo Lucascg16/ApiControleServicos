@@ -1,4 +1,6 @@
-﻿namespace ApiControleServicos.Domain.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ApiControleServicos.Domain.Models
 {
     public class ServicoModel : ModelBase
     {
@@ -15,13 +17,14 @@
         }
 
         public string? Nome { get; set; }
+        [MaxLength(500)]
         public string? Descricao { get; set; }
         public double? Custos { get; set; }
         public double? OrcamentoInicial { get; set; }
         public double? ValorFaturado { get; set; } = null;
         public double? LucroLiquido { get; set; } = null;
         public DateTime? DataFinalizado { get; set; } = null;
-        public string Flag { get; set; } = "Ativo";
+        public ServiceFlagEnum Flag { get; set; } = ServiceFlagEnum.Ativo;
         public int? UsuarioId { get; set; } = 0;
         public int? EmpresaId { get; set; } = 0;
 
@@ -38,13 +41,13 @@
 			ValorFaturado = faturamento;
 			LucroLiquido = faturamento - Custos;
 			DataFinalizado = DateTime.Now;
-            Flag = "Finalizado";
+            Flag = ServiceFlagEnum.Finalizado;
 			Atualizar();
 		}
 
 		public void Deletar()
         {
-            Flag = "Cancelado";
+            Flag = ServiceFlagEnum.Cancelado;
             Excluir();
         }
     }

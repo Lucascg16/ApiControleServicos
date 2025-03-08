@@ -13,7 +13,7 @@ namespace ApiControleServicos.Domain
 		[Required]
 		public string Password {  get; set; } = string.Empty;
 		[DefaultValue("none")]
-		public string Role { get; set; } = "none";
+		public UserRoleEnum Role { get; set; } =  UserRoleEnum.None;
 		[DefaultValue(0)]
 		public int EmpresaId { get; set; }
 		[DefaultValue(false)]

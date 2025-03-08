@@ -25,12 +25,12 @@ namespace ApiControleServicos.Controllers
 		{
  			try
 			{
-				var usuarioDataBase = await _usuarioServices.GetByUserName(login.Email);
+				var usuarioDataBase = await _usuarioServices.GetByUserName(login.Email ?? "");
 
 				if (usuarioDataBase.Id == 0)
 					return Unauthorized("Email ou senha invalidos");
 
-				if (login.Password != CriptoServices.Descriptografa(usuarioDataBase.Password))
+				if (login.Password != CriptoServices.Descriptografa(usuarioDataBase.Password ?? ""))
 					return Unauthorized("Email ou senha invalidos");
 
 				var token = _tokenServices.GenerateToken(usuarioDataBase);
@@ -49,10 +49,10 @@ namespace ApiControleServicos.Controllers
 			{
 				var userDataBase = await _usuarioServices.GetByUserName(email);
 				if(userDataBase.Id == 0){
-					return Unauthorized("Email digitado não existe na base de dados");
+					return Unauthorized("Email inválido");
 				}
 			
-				return Ok(_tokenServices.GenerateToken(userDataBase, 3));
+				return Ok(_tokenServices.GenerateToken(userDataBase, 3, false));
 			}
 			catch (Exception ex)
 			{
@@ -65,13 +65,13 @@ namespace ApiControleServicos.Controllers
 		{
 			try
 			{
-				var userverify = await _usuarioServices.GetByUserName(novaConta.Usuario.Email);
-				if (userverify.Id != 0)
+				var userVerify = await _usuarioServices.GetByUserName(novaConta.Usuario.Email);
+				if (userVerify.Id != 0)
 				{
 					return Unauthorized("O email digitado ja está cadastrado no sistema");
 				}
 
-				if (novaConta is null || novaConta.Empresa is null || novaConta.Usuario is null)
+				if (novaConta?.Empresa is null || novaConta?.Usuario is null)
 					return BadRequest();
 
 				var empresaId = await _empresaServices.Create(novaConta.Empresa);
