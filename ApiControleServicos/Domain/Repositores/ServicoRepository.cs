@@ -29,8 +29,7 @@ namespace ApiControleServicos.Domain
 
         public async Task<List<ServicoDto>> GetAll(int empresaId, int page, int itensPerPage, string flag, string? nome)
 		{
-			List<ServicoModel> servicoList;
-			servicoList = await _context.Servicos.Where(x => x.EmpresaId == empresaId && x.Flag == flag)
+			var servicoList = await _context.Servicos.Where(x => x.EmpresaId == empresaId && x.Flag == flag)
 									.Skip((page - 1) * itensPerPage)
 									.Take(itensPerPage)
 									.OrderByDescending(x => x.DataCriacao).ToListAsync() ?? [];
@@ -39,14 +38,8 @@ namespace ApiControleServicos.Domain
 			{
 				servicoList = servicoList.Where(x => x.Nome.Contains(nome, StringComparison.CurrentCultureIgnoreCase)).ToList();
 			}
-
-			List<ServicoDto> dtoList = [];
-			foreach (var servico in servicoList)
-			{
-				dtoList.Add(_mapper.Map<ServicoDto>(servico));
-			}
-
-			return dtoList;
+			
+			return _mapper.Map<List<ServicoDto>>(servicoList);
 		}
 
 		public async Task<ServicoDto> GetByIdDto(int Id)
