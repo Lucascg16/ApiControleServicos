@@ -26,9 +26,9 @@ namespace ApiControleServicos.Controllers
 				var usuario = await _usuarioServices.GetById(id);
 				return Ok(usuario);
 			}
-			catch
+			catch(Exception ex)
 			{
-				return BadRequest();
+				return BadRequest(ex.Message);
 			}
 		}
 
@@ -40,9 +40,9 @@ namespace ApiControleServicos.Controllers
 				var usuario = await _usuarioServices.GetById(id);
 				return Ok(usuario);
 			}
-			catch
+			catch(Exception ex)
 			{
-				return BadRequest();
+				return BadRequest(ex.Message);
 			}
 		}
 
@@ -53,9 +53,9 @@ namespace ApiControleServicos.Controllers
 			{
 				return Ok(await _usuarioServices.GetAllNumber(empresaId));
 			}
-			catch 
+			catch(Exception ex)
 			{
-				return BadRequest();
+				return BadRequest(ex.Message);
 			}
 		}
 
@@ -68,9 +68,9 @@ namespace ApiControleServicos.Controllers
 				var usuarioList = await _usuarioServices.GetAll(empresaId, page, itensPerPage, nome);
 				return Ok(usuarioList);
 			}
-			catch
+			catch(Exception ex)
 			{
-				return BadRequest();
+				return BadRequest(ex.Message);
 			}
 		}
 
@@ -86,9 +86,9 @@ namespace ApiControleServicos.Controllers
 				await _usuarioServices.Create(novoUsuario);
 				return Ok();
 			}
-			catch
+			catch(Exception ex)
 			{
-				return BadRequest();
+				return BadRequest(ex.Message);
 			}
 		}
 
@@ -100,9 +100,9 @@ namespace ApiControleServicos.Controllers
 				await _usuarioServices.Update(usuario);
 				return Ok();
 			}
-			catch
+			catch(Exception ex)
 			{
-				return BadRequest();
+				return BadRequest(ex.Message);
 			}
 		}
 
@@ -114,9 +114,9 @@ namespace ApiControleServicos.Controllers
 				await _usuarioServices.Delete(id);
 				return Ok();
 			}
-			catch
+			catch(Exception ex)
 			{
-				return BadRequest();
+				return BadRequest(ex.Message);
 			}
 		}
 

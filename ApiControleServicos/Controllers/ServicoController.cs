@@ -24,9 +24,9 @@ namespace ApiControleServicos.Controllers
 			{
 				return Ok(await _services.GetById(id));
 			}
-			catch
+			catch(Exception ex)
 			{
-				return BadRequest();
+				return BadRequest(ex.Message);
 			}
 		}
 
@@ -37,23 +37,23 @@ namespace ApiControleServicos.Controllers
 			{
 				return Ok(await _services.GetAllNumber(empresaId, flag));
 			}
-			catch
+			catch(Exception ex)
 			{
-				return BadRequest();
+				return BadRequest(ex.Message);
 			}
 		}
 
 		[HttpGet("all")]
-		public async Task<IActionResult> GetAll([Required]int empresaId, ServiceFlagEnum flag = ServiceFlagEnum.Ativo, string? nome = null, int page = 1, int itensPerPage = 10)
+		public async Task<IActionResult> GetAll([Required]int empresaId, DateTime data, ServiceFlagEnum flag = ServiceFlagEnum.Ativo, string? nome = null, int page = 1, int itensPerPage = 10)
 		{
 			try
 			{
-				var servicoList = await _services.GetAll(empresaId, page, itensPerPage, flag, nome);
+				var servicoList = await _services.GetAll(empresaId, page, itensPerPage, flag, nome, data);
 				return Ok(servicoList);
 			}
-			catch
+			catch(Exception ex)
 			{
-				return BadRequest();
+				return BadRequest(ex.Message);
 			}
 		}
 
@@ -65,9 +65,9 @@ namespace ApiControleServicos.Controllers
 				await _services.Create(novoServico);
 				return Ok();
 			}
-			catch
+			catch(Exception ex)
 			{
-				return BadRequest();
+				return BadRequest(ex.Message);
 			}
 		}
 
@@ -79,9 +79,9 @@ namespace ApiControleServicos.Controllers
 				await _services.Update(servico);
 				return Ok();
 			}
-			catch
+			catch(Exception ex)
 			{
-				return BadRequest();
+				return BadRequest(ex.Message);
 			}
 		}
 
@@ -93,9 +93,9 @@ namespace ApiControleServicos.Controllers
 				await _services.FinalizarServico(servicoId, faturamento);
 				return Ok();
 			}
-			catch
+			catch(Exception ex)
 			{
-				return BadRequest();
+				return BadRequest(ex.Message);
 			}
 		}
 
@@ -107,9 +107,9 @@ namespace ApiControleServicos.Controllers
 				await _services.CancelarServico(servicoId);
 				return Ok();
 			}
-			catch
+			catch(Exception ex)
 			{
-				return BadRequest();
+				return BadRequest(ex.Message);
 			}
 		}
 	}

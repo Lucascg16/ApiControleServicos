@@ -7,7 +7,7 @@ namespace ApiControleServicos.Domain
 		Task Create(ServicoModel servico);
 		Task<int> GetTotalNumber(int empresaId, ServiceFlagEnum flag);
 
-        Task<List<ServicoDto>> GetAll(int emrpesaId, int page, int itensPerPage, ServiceFlagEnum flag, string? nome);
+        Task<List<ServicoDto>> GetAll(int emrpesaId, int page, int itensPerPage, ServiceFlagEnum flag, string? nome, DateTime data);
 		Task<ServicoDto> GetByIdDto(int id);
 		Task<ServicoModel> GetById(int id);
 		void Update(ServicoModel servico);

@@ -81,9 +81,9 @@ namespace ApiControleServicos.Controllers
 
 				return Ok();
 			}
-			catch
+			catch(Exception ex)
 			{
-				return BadRequest();
+				return BadRequest(ex.Message);
 			}
 		}
 	}

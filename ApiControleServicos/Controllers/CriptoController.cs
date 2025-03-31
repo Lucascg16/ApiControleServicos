@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ApiControleServicos.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/v1/criptografia")]
     public class CriptoController : ControllerBase
     {

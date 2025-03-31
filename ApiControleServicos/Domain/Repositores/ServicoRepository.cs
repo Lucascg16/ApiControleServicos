@@ -27,18 +27,19 @@ namespace ApiControleServicos.Domain
             return await _context.Servicos.Where(x => x.EmpresaId == empresaId && x.Flag == flag).CountAsync();
         }
 
-        public async Task<List<ServicoDto>> GetAll(int empresaId, int page, int itensPerPage, ServiceFlagEnum flag, string? nome)
+        public async Task<List<ServicoDto>> GetAll(int empresaId, int page, int itensPerPage, ServiceFlagEnum flag, string? nome, DateTime data)
 		{
-			var servicoList = await _context.Servicos.Where(x => x.EmpresaId == empresaId && x.Flag == flag)
+			var servicoList = await _context.Servicos.AsNoTracking().Where(x => x.EmpresaId == empresaId && x.Flag == flag)
 									.Skip((page - 1) * itensPerPage)
 									.Take(itensPerPage)
 									.OrderByDescending(x => x.DataCriacao).ToListAsync() ?? [];
-
-			if (!string.IsNullOrEmpty(nome))
-			{
-				servicoList = servicoList.Where(x => x.Nome.Contains(nome, StringComparison.CurrentCultureIgnoreCase)).ToList();
-			}
 			
+			if(data != DateTime.MinValue)
+				servicoList = servicoList.Where(x => x.DataCriacao.DayOfYear == data.DayOfYear && x.DataCriacao.Year == data.Year).ToList();
+			
+			if (!string.IsNullOrEmpty(nome))
+				servicoList = servicoList.Where(x => x.Nome.Contains(nome, StringComparison.CurrentCultureIgnoreCase)).ToList();
+
 			return _mapper.Map<List<ServicoDto>>(servicoList);
 		}
 

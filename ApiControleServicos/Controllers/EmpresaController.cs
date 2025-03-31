@@ -25,9 +25,9 @@ namespace ApiControleServicos.Controllers
 				var empresa = await _empresaServices.GetById(id);
 				return Ok(empresa);
 			}
-			catch 
+			catch (Exception ex)
 			{
-				return BadRequest();
+				return BadRequest(ex.Message);
 			}
 		}
 
@@ -38,9 +38,9 @@ namespace ApiControleServicos.Controllers
 			{
 				return Ok(await _empresaServices.GetAll());
 			}
-			catch
+			catch (Exception ex)
 			{
-				return BadRequest();
+				return BadRequest(ex.Message);
 			}
 		}
 
@@ -52,9 +52,9 @@ namespace ApiControleServicos.Controllers
 				await _empresaServices.Update(empresa);
 				return Ok();
 			}
-			catch
+			catch(Exception ex)
 			{
-				return BadRequest();
+				return BadRequest(ex.Message);
 			}
 		}
 
@@ -66,9 +66,9 @@ namespace ApiControleServicos.Controllers
 				await _empresaServices.DesableAll(id);
 				return Ok();
 			}
-			catch
+			catch(Exception ex)
 			{
-				return BadRequest();
+				return BadRequest(ex.Message);
 			}
 		}
 	}
