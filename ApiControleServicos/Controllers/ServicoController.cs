@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ApiControleServicos.Controllers
 {
-	[Authorize(Roles = "Admin,Employee")]
+	[Authorize(Roles = "Admin,Funcionario")]
 	[ApiController]
 	[Route("api/v1/servico")]
 	public class ServicoController : ControllerBase
